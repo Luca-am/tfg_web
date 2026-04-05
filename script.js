@@ -50,7 +50,9 @@ document.addEventListener('DOMContentLoaded', function() {
     ];
 
     createPieChart('#conclusion-summary', conclusionData, 'Resum de la Conclusió');
-    renderPdfCovers().then(addPdfOpenButtons);
+    renderPdfCovers().then(addPdfOpenButtons).catch((error) => {
+        console.error('Error al renderitzar portades PDF:', error);
+    });
 });
 
 // Scroll animations with Motion
@@ -104,29 +106,49 @@ async function renderPdfCover(canvas) {
         return;
     }
 
+    if (typeof pdfjsLib === 'undefined') {
+        console.error('pdfjsLib no està definit. Comprova la inclusió de PDF.js.');
+        return;
+    }
+
     try {
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.392/pdf.worker.min.js';
-        const pdfUrl = new URL(pdfSrc, window.location.href).href;
-        const loadingTask = pdfjsLib.getDocument(pdfUrl);
+        const encodedPath = pdfSrc.split('/').map(segment => encodeURIComponent(segment)).join('/');
+        const pdfUrl = new URL(encodedPath, window.location.href).href;
+        console.log('PDF cover load:', pdfUrl);
+        const loadingTask = pdfjsLib.getDocument({ url: pdfUrl });
         const pdf = await loadingTask.promise;
         const page = await pdf.getPage(1);
-        const viewport = page.getViewport({ scale: 1.2 });
+
+        const wrapper = canvas.parentElement;
+        const wrapperWidth = wrapper.clientWidth;
+        const wrapperHeight = wrapper.clientHeight;
+
+        const baseViewport = page.getViewport({ scale: 1 });
+        const scale = Math.min(wrapperWidth / baseViewport.width, wrapperHeight / baseViewport.height);
+        const viewport = page.getViewport({ scale });
 
         canvas.width = viewport.width;
         canvas.height = viewport.height;
+        canvas.style.width = `${viewport.width}px`;
+        canvas.style.height = `${viewport.height}px`;
+        canvas.style.display = 'block';
 
         const context = canvas.getContext('2d');
         const renderTask = page.render({ canvasContext: context, viewport });
         await renderTask.promise;
     } catch (error) {
         canvas.style.background = '#e2e8f0';
+        canvas.style.width = '100%';
+        canvas.style.height = '100%';
+        canvas.style.display = 'block';
         console.error('No es pot renderitzar el PDF:', pdfSrc, error);
     }
 }
 
 function renderPdfCovers() {
     const canvases = document.querySelectorAll('.cover-canvas');
-    return Promise.all(Array.from(canvases).map(renderPdfCover));
+    return Promise.allSettled(Array.from(canvases).map(renderPdfCover));
 }
 
 function addPdfOpenButtons() {
