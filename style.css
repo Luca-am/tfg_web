@@ -54,6 +54,75 @@ body {
     font-size: 1rem;
 }
 
+.bibliography-grid {
+    display: grid;
+    gap: 2rem;
+}
+
+.shelf {
+    background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+    border: 1px solid #e5e7eb;
+    border-radius: 28px;
+    padding: 1.5rem;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.05);
+}
+
+.bookshelf {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    padding: 0.75rem;
+    background: #f1f5f9;
+    border-radius: 24px;
+    border: 1px solid #dbeafe;
+}
+
+.book-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: #ffffff;
+    border-radius: 24px;
+    border: 1px solid #d1d5db;
+    padding: 1.25rem;
+    box-shadow: 0 12px 22px rgba(15, 23, 42, 0.06);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.book-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 32px rgba(15, 23, 42, 0.1);
+}
+
+.book-card h4 {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.4;
+    color: #0f172a;
+}
+
+.book-card p {
+    margin: 0;
+    color: #475569;
+    font-style: italic;
+}
+
+.open-pdf {
+    margin-top: auto;
+    align-self: flex-start;
+    padding: 0.6rem 1rem;
+    background: #0f172a;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    transition: background 0.25s ease;
+}
+
+.open-pdf:hover {
+    background: #1f2937;
+}
+
 header {
     background-color: #fff;
     padding: 2rem;
@@ -191,37 +260,6 @@ section h2, section p, section div[id$="-viz"], section div[id$="-chart"], secti
     color: #111827;
 }
 
-.carousel {
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    cursor: pointer;
-    border-radius: 22px;
-    transition: box-shadow 0.3s ease;
-}
-
-.carousel:hover {
-    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
-}
-
-.carousel__viewport {
-    display: flex;
-    gap: 0;
-    transition: transform 0.5s ease;
-    will-change: transform;
-}
-
-.carousel__slide {
-    min-width: 100%;
-    box-sizing: border-box;
-    padding: 1.5rem 3rem;
-    background: #f8fafc;
-    border-radius: 22px;
-    border: 1px solid #d1d5db;
-    text-align: left;
-    color: #0f172a;
-    box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
-}
 
 .cover-wrapper {
     width: 100%;
@@ -246,13 +284,13 @@ section h2, section p, section div[id$="-viz"], section div[id$="-chart"], secti
     display: block;
 }
 
-.item h4 {
+.book-card h4 {
     margin: 0 0 0.75rem 0;
     font-size: 1.15rem;
     line-height: 1.5;
 }
 
-.item p {
+.book-card p {
     margin: 0;
     font-style: italic;
     color: #475569;
