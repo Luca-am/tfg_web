@@ -48,6 +48,17 @@ body {
     color: #000;
 }
 
+.section-header h2[contenteditable="true"] {
+    border-bottom: 1px dashed rgba(15, 23, 42, 0.25);
+    padding-bottom: 0.2rem;
+    outline: none;
+    cursor: text;
+}
+
+.section-header h2[contenteditable="true"]:focus {
+    background: rgba(255, 255, 255, 0.6);
+}
+
 .section-header .meta {
     color: #666;
     margin: 0;
@@ -60,11 +71,26 @@ body {
 }
 
 .shelf {
-    background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
     border: 1px solid #e5e7eb;
     border-radius: 28px;
     padding: 1.5rem;
     box-shadow: 0 18px 40px rgba(15, 23, 42, 0.05);
+}
+
+.shelf--method {
+    background: #fff7ed;
+}
+
+.shelf--fandom {
+    background: #eef2ff;
+}
+
+.shelf--reality {
+    background: #eff6ff;
+}
+
+.shelf--theory {
+    background: #f0fdf4;
 }
 
 .bookshelf {

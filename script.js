@@ -98,14 +98,16 @@ inView("#bibliography", () => {
 });
 
 async function renderPdfCover(canvas) {
-    const pdfSrc = canvas.closest('.book-card')?.dataset?.pdfSrc;
+    const card = canvas.closest('.book-card');
+    const pdfSrc = card?.dataset?.pdfSrc?.trim();
     if (!pdfSrc) {
         return;
     }
 
     try {
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.392/pdf.worker.min.js';
-        const loadingTask = pdfjsLib.getDocument(encodeURI(pdfSrc));
+        const pdfUrl = new URL(pdfSrc, window.location.href).href;
+        const loadingTask = pdfjsLib.getDocument(pdfUrl);
         const pdf = await loadingTask.promise;
         const page = await pdf.getPage(1);
         const viewport = page.getViewport({ scale: 1.2 });
@@ -114,8 +116,10 @@ async function renderPdfCover(canvas) {
         canvas.height = viewport.height;
 
         const context = canvas.getContext('2d');
-        await page.render({ canvasContext: context, viewport }).promise;
+        const renderTask = page.render({ canvasContext: context, viewport });
+        await renderTask.promise;
     } catch (error) {
+        canvas.style.background = '#e2e8f0';
         console.error('No es pot renderitzar el PDF:', pdfSrc, error);
     }
 }
