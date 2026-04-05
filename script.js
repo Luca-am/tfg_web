@@ -98,7 +98,7 @@ inView("#bibliography", () => {
 });
 
 async function renderPdfCover(canvas) {
-    const pdfSrc = canvas.closest('.carousel__slide')?.dataset?.pdfSrc;
+    const pdfSrc = canvas.closest('.book-card')?.dataset?.pdfSrc;
     if (!pdfSrc) {
         return;
     }
@@ -126,10 +126,10 @@ function renderPdfCovers() {
 }
 
 function addPdfOpenButtons() {
-    document.querySelectorAll('.carousel__slide[data-pdf-src]').forEach((slide) => {
-        const pdfSrc = slide.dataset.pdfSrc;
+    document.querySelectorAll('.book-card[data-pdf-src]').forEach((card) => {
+        const pdfSrc = card.dataset.pdfSrc;
         if (!pdfSrc) return;
-        if (slide.querySelector('.open-pdf')) return;
+        if (card.querySelector('.open-pdf')) return;
 
         const link = document.createElement('a');
         link.className = 'open-pdf';
@@ -137,42 +137,10 @@ function addPdfOpenButtons() {
         link.target = '_blank';
         link.rel = 'noopener noreferrer';
         link.textContent = 'Obrir PDF';
-        slide.appendChild(link);
+        card.appendChild(link);
     });
 }
 
-// Carousel functionality with keyboard navigation
-document.querySelectorAll('.carousel').forEach((carousel) => {
-    const viewport = carousel.querySelector('.carousel__viewport');
-    const slides = viewport.children;
-    let currentIndex = 0;
-
-    function updateCarousel() {
-        const translateX = -currentIndex * 100;
-        viewport.style.transform = `translateX(${translateX}%)`;
-    }
-
-    function nextSlide() {
-        currentIndex = currentIndex < slides.length - 1 ? currentIndex + 1 : 0;
-        updateCarousel();
-    }
-
-    function prevSlide() {
-        currentIndex = currentIndex > 0 ? currentIndex - 1 : slides.length - 1;
-        updateCarousel();
-    }
-
-    // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowRight') {
-            nextSlide();
-        } else if (e.key === 'ArrowLeft') {
-            prevSlide();
-        }
-    });
-
-    updateCarousel();
-});
 
 // Funció per crear gràfic de barres
 function createBarChart(selector, data, title) {
