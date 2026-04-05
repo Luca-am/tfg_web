@@ -1,5 +1,8 @@
 // Script per a visualitzacions amb D3.js, inspirat en The Pudding
 
+import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+import { animate, inView } from "https://cdn.jsdelivr.net/npm/motion@latest/dist/motion.js";
+
 document.addEventListener('DOMContentLoaded', function() {
     // Visualització per al resum: un gràfic simple de barres
     const abstractData = [
@@ -47,6 +50,128 @@ document.addEventListener('DOMContentLoaded', function() {
     ];
 
     createPieChart('#conclusion-summary', conclusionData, 'Resum de la Conclusió');
+    renderPdfCovers().then(addPdfOpenButtons);
+});
+
+// Scroll animations with Motion
+inView("header", () => {
+    animate("header h1", { opacity: 1, y: 0 }, { duration: 0.8 });
+    animate("header p", { opacity: 1, y: 0 }, { duration: 0.8, delay: 0.2 });
+});
+
+inView("#abstract", () => {
+    animate("#abstract h2", { opacity: 1, y: 0 }, { duration: 0.6 });
+    animate("#abstract p", { opacity: 1, y: 0 }, { duration: 0.6, delay: 0.2 });
+    animate("#abstract-viz", { opacity: 1, y: 0 }, { duration: 0.8, delay: 0.4 });
+});
+
+inView("#intro", () => {
+    animate("#intro h2", { opacity: 1, y: 0 }, { duration: 0.6 });
+    animate("#intro p", { opacity: 1, y: 0 }, { duration: 0.6, delay: 0.2 });
+    animate("#intro-chart", { opacity: 1, y: 0 }, { duration: 0.8, delay: 0.4 });
+});
+
+inView("#method", () => {
+    animate("#method h2", { opacity: 1, y: 0 }, { duration: 0.6 });
+    animate("#method p", { opacity: 1, y: 0 }, { duration: 0.6, delay: 0.2 });
+    animate("#method-diagram", { opacity: 1, y: 0 }, { duration: 0.8, delay: 0.4 });
+});
+
+inView("#results", () => {
+    animate("#results h2", { opacity: 1, y: 0 }, { duration: 0.6 });
+    animate("#results p", { opacity: 1, y: 0 }, { duration: 0.6, delay: 0.2 });
+    animate("#results-viz", { opacity: 1, y: 0 }, { duration: 0.8, delay: 0.4 });
+});
+
+inView("#conclusion", () => {
+    animate("#conclusion h2", { opacity: 1, y: 0 }, { duration: 0.6 });
+    animate("#conclusion p", { opacity: 1, y: 0 }, { duration: 0.6, delay: 0.2 });
+    animate("#conclusion-summary", { opacity: 1, y: 0 }, { duration: 0.8, delay: 0.4 });
+});
+
+inView("#bibliography", () => {
+    animate("#bibliography h1", { opacity: 1, y: 0 }, { duration: 0.6 });
+    animate("#bibliography p", { opacity: 1, y: 0 }, { duration: 0.6, delay: 0.2 });
+    document.querySelectorAll('#bibliography .section-header h2').forEach((title, index) => {
+        animate(title, { opacity: 1, y: 0 }, { duration: 0.6, delay: 0.4 + index * 0.15 });
+    });
+});
+
+async function renderPdfCover(canvas) {
+    const pdfSrc = canvas.closest('.carousel__slide')?.dataset?.pdfSrc;
+    if (!pdfSrc) {
+        return;
+    }
+
+    try {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.392/pdf.worker.min.js';
+        const loadingTask = pdfjsLib.getDocument(encodeURI(pdfSrc));
+        const pdf = await loadingTask.promise;
+        const page = await pdf.getPage(1);
+        const viewport = page.getViewport({ scale: 1.2 });
+
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+
+        const context = canvas.getContext('2d');
+        await page.render({ canvasContext: context, viewport }).promise;
+    } catch (error) {
+        console.error('No es pot renderitzar el PDF:', pdfSrc, error);
+    }
+}
+
+function renderPdfCovers() {
+    const canvases = document.querySelectorAll('.cover-canvas');
+    return Promise.all(Array.from(canvases).map(renderPdfCover));
+}
+
+function addPdfOpenButtons() {
+    document.querySelectorAll('.carousel__slide[data-pdf-src]').forEach((slide) => {
+        const pdfSrc = slide.dataset.pdfSrc;
+        if (!pdfSrc) return;
+        if (slide.querySelector('.open-pdf')) return;
+
+        const link = document.createElement('a');
+        link.className = 'open-pdf';
+        link.href = pdfSrc;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.textContent = 'Obrir PDF';
+        slide.appendChild(link);
+    });
+}
+
+// Carousel functionality with keyboard navigation
+document.querySelectorAll('.carousel').forEach((carousel) => {
+    const viewport = carousel.querySelector('.carousel__viewport');
+    const slides = viewport.children;
+    let currentIndex = 0;
+
+    function updateCarousel() {
+        const translateX = -currentIndex * 100;
+        viewport.style.transform = `translateX(${translateX}%)`;
+    }
+
+    function nextSlide() {
+        currentIndex = currentIndex < slides.length - 1 ? currentIndex + 1 : 0;
+        updateCarousel();
+    }
+
+    function prevSlide() {
+        currentIndex = currentIndex > 0 ? currentIndex - 1 : slides.length - 1;
+        updateCarousel();
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') {
+            nextSlide();
+        } else if (e.key === 'ArrowLeft') {
+            prevSlide();
+        }
+    });
+
+    updateCarousel();
 });
 
 // Funció per crear gràfic de barres

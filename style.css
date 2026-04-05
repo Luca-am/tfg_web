@@ -1,5 +1,3 @@
-/* Estils inspirats en The Pudding: net, modern, enfocat en contingut visual */
-
 body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     line-height: 1.6;
@@ -7,6 +5,53 @@ body {
     padding: 0;
     color: #333;
     background-color: #f9f9f9;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.h {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.h h1 {
+    font-size: 2.5rem;
+    margin: 0 0 0.5rem 0;
+    color: #000;
+}
+
+.h p {
+    font-size: 1.2rem;
+    color: #666;
+    margin: 0;
+}
+
+.bibliography {
+    padding: 3rem 0;
+}
+
+.bibliography__section {
+    margin-bottom: 4rem;
+}
+
+.section-header {
+    margin-bottom: 2rem;
+}
+
+.section-header h2 {
+    font-size: 1.5rem;
+    margin: 0 0 0.5rem 0;
+    color: #000;
+}
+
+.section-header .meta {
+    color: #666;
+    margin: 0;
+    font-size: 1rem;
 }
 
 header {
@@ -83,5 +128,165 @@ footer {
 #abstract-viz, #intro-chart, #method-diagram, #results-viz, #conclusion-summary {
     margin: 2rem 0;
     height: 300px;
-}</content>
+}
+
+/* Initial states for scroll animations */
+header h1, header p {
+    opacity: 0;
+    transform: translateY(-50px);
+}
+
+section h2, section p, section div[id$="-viz"], section div[id$="-chart"], section div[id$="-diagram"], section div[id$="-summary"] {
+    opacity: 0;
+    transform: translateY(50px);
+}
+
+#bibliography h2, #bibliography .theme-card__title {
+    opacity: 0;
+    transform: translateY(50px);
+}
+
+#bibliography {
+    background: #f8fafc;
+    color: #111827;
+    padding: 3rem 1rem;
+}
+
+#bibliography h2 {
+    color: #0f172a;
+    border-color: #c7d2fe;
+}
+
+.bibliography-header {
+    max-width: 900px;
+    margin: 0 auto 2rem;
+    text-align: center;
+}
+
+.bibliography-header p {
+    margin: 0.75rem auto 0;
+    max-width: 720px;
+    color: #475569;
+}
+
+.themes-grid {
+    display: grid;
+    gap: 1.75rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.theme-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 28px;
+    padding: 1.5rem;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+}
+
+.theme-card__title {
+    font-size: 1.35rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.carousel {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    cursor: pointer;
+    border-radius: 22px;
+    transition: box-shadow 0.3s ease;
+}
+
+.carousel:hover {
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.carousel__viewport {
+    display: flex;
+    gap: 0;
+    transition: transform 0.5s ease;
+    will-change: transform;
+}
+
+.carousel__slide {
+    min-width: 100%;
+    box-sizing: border-box;
+    padding: 1.5rem 3rem;
+    background: #f8fafc;
+    border-radius: 22px;
+    border: 1px solid #d1d5db;
+    text-align: left;
+    color: #0f172a;
+    box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+}
+
+.cover-wrapper {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #e2e8f0;
+    display: grid;
+    place-items: center;
+    margin-bottom: 1rem;
+}
+
+.cover-wrapper.empty {
+    background: #0f172a;
+    color: #f8fafc;
+    font-size: 1.5rem;
+}
+
+.cover-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.item h4 {
+    margin: 0 0 0.75rem 0;
+    font-size: 1.15rem;
+    line-height: 1.5;
+}
+
+.item p {
+    margin: 0;
+    font-style: italic;
+    color: #475569;
+}
+
+.open-pdf {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+    padding: 0.65rem 1rem;
+    background: #0f172a;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: background 0.25s ease;
+}
+
+.open-pdf:hover {
+    background: #1f2937;
+}
+
+@media (min-width: 900px) {
+    .themes-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1200px) {
+    .themes-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+</content>
 <parameter name="filePath">c:\Users\Luca\OneDrive\Documents\GitHub\tfg_web\style.css
