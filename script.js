@@ -1,103 +1,53 @@
-// Script per a visualitzacions amb D3.js, inspirat en The Pudding
-
-import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
-import { animate, inView } from "https://cdn.jsdelivr.net/npm/motion@latest/dist/motion.js";
+// Script per a visualitzacions de portada de PDF
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Visualització per al resum: un gràfic simple de barres
-    const abstractData = [
-        { label: 'Objectiu', value: 80 },
-        { label: 'Resultats', value: 60 },
-        { label: 'Impacte', value: 40 }
-    ];
+    renderPdfCovers()
+        .then(() => {
+            addPdfOpenButtons();
+            decorateBookCards();
+        })
+        .catch((error) => {
+            console.error('Error al renderitzar portades PDF:', error);
+        });
+});
 
-    createBarChart('#abstract-viz', abstractData, 'Aspectes Clau de la Tesi');
+function decorateBookCards() {
+    document.querySelectorAll('.book-card').forEach((card) => {
+        const wrapper = card.querySelector('.cover-wrapper');
+        const title = card.querySelector('h4');
+        const author = card.querySelector('p');
+        const button = card.querySelector('.open-pdf');
 
-    // Gràfic d'introducció: línia per mostrar tendències
-    const introData = [
-        { x: 0, y: 10 },
-        { x: 1, y: 20 },
-        { x: 2, y: 35 },
-        { x: 3, y: 50 },
-        { x: 4, y: 70 }
-    ];
+        if (!wrapper || !title || !author) return;
+        if (wrapper.querySelector('.cover-overlay')) return;
 
-    createLineChart('#intro-chart', introData, 'Evolució del Tema');
+        const overlay = document.createElement('div');
+        overlay.className = 'cover-overlay';
 
-    // Diagrama de metodologia: cercle amb passos
-    const methodData = [
-        { label: 'Recerca', value: 30 },
-        { label: 'Anàlisi', value: 40 },
-        { label: 'Validació', value: 30 }
-    ];
+        const content = document.createElement('div');
+        content.className = 'cover-overlay__content';
 
-    createPieChart('#method-diagram', methodData, 'Passos de la Metodologia');
+        const titleClone = title.cloneNode(true);
+        titleClone.className = 'cover-overlay__title';
 
-    // Resultats: gràfic de barres amb dades de mostra
-    const resultsData = [
-        { label: 'Grup A', value: 45 },
-        { label: 'Grup B', value: 65 },
-        { label: 'Grup C', value: 30 },
-        { label: 'Grup D', value: 80 }
-    ];
+        const authorClone = author.cloneNode(true);
+        authorClone.className = 'cover-overlay__author';
 
-    createBarChart('#results-viz', resultsData, 'Resultats Principals');
+        content.appendChild(titleClone);
+        content.appendChild(authorClone);
 
-    // Conclusió: resum visual
-    const conclusionData = [
-        { label: 'Èxit', value: 75 },
-        { label: 'Limitacions', value: 25 }
-    ];
+        if (button) {
+            button.className = 'open-pdf cover-overlay__button';
+            content.appendChild(button);
+        }
 
-    createPieChart('#conclusion-summary', conclusionData, 'Resum de la Conclusió');
-    renderPdfCovers().then(addPdfOpenButtons).catch((error) => {
-        console.error('Error al renderitzar portades PDF:', error);
+        overlay.appendChild(content);
+        wrapper.appendChild(overlay);
+
+        title.style.display = 'none';
+        author.style.display = 'none';
     });
-});
-
-// Scroll animations with Motion
-inView("header", () => {
-    animate("header h1", { opacity: 1, y: 0 }, { duration: 0.8 });
-    animate("header p", { opacity: 1, y: 0 }, { duration: 0.8, delay: 0.2 });
-});
-
-inView("#abstract", () => {
-    animate("#abstract h2", { opacity: 1, y: 0 }, { duration: 0.6 });
-    animate("#abstract p", { opacity: 1, y: 0 }, { duration: 0.6, delay: 0.2 });
-    animate("#abstract-viz", { opacity: 1, y: 0 }, { duration: 0.8, delay: 0.4 });
-});
-
-inView("#intro", () => {
-    animate("#intro h2", { opacity: 1, y: 0 }, { duration: 0.6 });
-    animate("#intro p", { opacity: 1, y: 0 }, { duration: 0.6, delay: 0.2 });
-    animate("#intro-chart", { opacity: 1, y: 0 }, { duration: 0.8, delay: 0.4 });
-});
-
-inView("#method", () => {
-    animate("#method h2", { opacity: 1, y: 0 }, { duration: 0.6 });
-    animate("#method p", { opacity: 1, y: 0 }, { duration: 0.6, delay: 0.2 });
-    animate("#method-diagram", { opacity: 1, y: 0 }, { duration: 0.8, delay: 0.4 });
-});
-
-inView("#results", () => {
-    animate("#results h2", { opacity: 1, y: 0 }, { duration: 0.6 });
-    animate("#results p", { opacity: 1, y: 0 }, { duration: 0.6, delay: 0.2 });
-    animate("#results-viz", { opacity: 1, y: 0 }, { duration: 0.8, delay: 0.4 });
-});
-
-inView("#conclusion", () => {
-    animate("#conclusion h2", { opacity: 1, y: 0 }, { duration: 0.6 });
-    animate("#conclusion p", { opacity: 1, y: 0 }, { duration: 0.6, delay: 0.2 });
-    animate("#conclusion-summary", { opacity: 1, y: 0 }, { duration: 0.8, delay: 0.4 });
-});
-
-inView("#bibliography", () => {
-    animate("#bibliography h1", { opacity: 1, y: 0 }, { duration: 0.6 });
-    animate("#bibliography p", { opacity: 1, y: 0 }, { duration: 0.6, delay: 0.2 });
-    document.querySelectorAll('#bibliography .section-header h2').forEach((title, index) => {
-        animate(title, { opacity: 1, y: 0 }, { duration: 0.6, delay: 0.4 + index * 0.15 });
-    });
-});
+}
 
 async function renderPdfCover(canvas) {
     const card = canvas.closest('.book-card');
@@ -112,7 +62,7 @@ async function renderPdfCover(canvas) {
     }
 
     try {
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.392/pdf.worker.min.js';
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist/build/pdf.worker.min.js';
         const encodedPath = pdfSrc.split('/').map(segment => encodeURIComponent(segment)).join('/');
         const pdfUrl = new URL(encodedPath, window.location.href).href;
         console.log('PDF cover load:', pdfUrl);
@@ -121,17 +71,16 @@ async function renderPdfCover(canvas) {
         const page = await pdf.getPage(1);
 
         const wrapper = canvas.parentElement;
-        const wrapperWidth = wrapper.clientWidth;
         const wrapperHeight = wrapper.clientHeight;
 
         const baseViewport = page.getViewport({ scale: 1 });
-        const scale = Math.min(wrapperWidth / baseViewport.width, wrapperHeight / baseViewport.height);
+        const scale = wrapperHeight / baseViewport.height;
         const viewport = page.getViewport({ scale });
 
         canvas.width = viewport.width;
         canvas.height = viewport.height;
-        canvas.style.width = `${viewport.width}px`;
-        canvas.style.height = `${viewport.height}px`;
+        canvas.style.width = 'auto';
+        canvas.style.height = '100%';
         canvas.style.display = 'block';
 
         const context = canvas.getContext('2d');
@@ -159,7 +108,7 @@ function addPdfOpenButtons() {
 
         const link = document.createElement('a');
         link.className = 'open-pdf';
-        link.href = pdfSrc;
+        link.href = encodeURI(pdfSrc);
         link.target = '_blank';
         link.rel = 'noopener noreferrer';
         link.textContent = 'Obrir PDF';
@@ -168,7 +117,8 @@ function addPdfOpenButtons() {
 }
 
 
-// Funció per crear gràfic de barres
+// If you want to keep chart helpers available, you can leave them defined below.
+// They are not used by the current bibliography page and do not require D3 imports unless activated.
 function createBarChart(selector, data, title) {
     const svg = d3.select(selector).append('svg')
         .attr('width', 400)
@@ -301,5 +251,4 @@ function createPieChart(selector, data, title) {
         .attr('text-anchor', 'middle')
         .style('font-size', '16px')
         .text(title);
-}</content>
-<parameter name="filePath">c:\Users\Luca\OneDrive\Documents\GitHub\tfg_web\script.js
+}

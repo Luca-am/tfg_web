@@ -106,31 +106,88 @@ body {
 .book-card {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
     background: #ffffff;
-    border-radius: 24px;
-    border: 1px solid #d1d5db;
-    padding: 1.25rem;
-    box-shadow: 0 12px 22px rgba(15, 23, 42, 0.06);
+    border-radius: 28px;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .book-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 18px 32px rgba(15, 23, 42, 0.1);
+    transform: translateY(-4px);
+    box-shadow: 0 22px 48px rgba(15, 23, 42, 0.14);
 }
 
-.book-card h4 {
-    margin: 0;
-    font-size: 1.05rem;
-    line-height: 1.4;
+.cover-wrapper {
+    width: 100%;
+    height: 340px;
+    overflow: hidden;
+    position: relative;
+    background: #e2e8f0;
+    display: grid;
+    place-items: center;
+}
+
+.cover-wrapper.empty {
+    background: #0f172a;
+    color: #f8fafc;
+    font-size: 1.5rem;
+}
+
+.cover-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.cover-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    padding: 1.5rem;
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0) 35%, rgba(15, 23, 42, 0.78) 100%);
+}
+
+.cover-overlay__content {
+    color: #fff;
+    max-width: 100%;
+}
+
+.cover-overlay__title {
+    margin: 0 0 0.35rem 0;
+    font-size: 1.2rem;
+    line-height: 1.25;
+    font-weight: 700;
+}
+
+.cover-overlay__author {
+    margin: 0 0 1rem 0;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.95rem;
+}
+
+.cover-overlay__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.25rem;
+    background: rgba(255, 255, 255, 0.92);
     color: #0f172a;
+    border-radius: 999px;
+    font-weight: 700;
+    text-decoration: none;
 }
 
-.book-card p {
-    margin: 0;
-    color: #475569;
-    font-style: italic;
+.book-card h4,
+.book-card p,
+.book-card > .open-pdf {
+    display: none;
+}
+
+.cover-overlay .open-pdf {
+    display: inline-flex;
 }
 
 .open-pdf {
@@ -233,21 +290,6 @@ footer {
     height: 300px;
 }
 
-/* Initial states for scroll animations */
-header h1, header p {
-    opacity: 0;
-    transform: translateY(-50px);
-}
-
-section h2, section p, section div[id$="-viz"], section div[id$="-chart"], section div[id$="-diagram"], section div[id$="-summary"] {
-    opacity: 0;
-    transform: translateY(50px);
-}
-
-#bibliography h2, #bibliography .theme-card__title {
-    opacity: 0;
-    transform: translateY(50px);
-}
 
 #bibliography {
     background: #f8fafc;
@@ -295,28 +337,7 @@ section h2, section p, section div[id$="-viz"], section div[id$="-chart"], secti
 }
 
 
-.cover-wrapper {
-    width: 100%;
-    height: 220px;
-    overflow: hidden;
-    border-radius: 20px;
-    background: #e2e8f0;
-    display: grid;
-    place-items: center;
-    margin-bottom: 1rem;
-}
-
-.cover-wrapper.empty {
-    background: #0f172a;
-    color: #f8fafc;
-    font-size: 1.5rem;
-}
-
-.cover-canvas {
-    width: 100%;
-    height: 100%;
-    display: block;
-}
+/* duplicate cover-wrapper styles removed */
 
 .book-card h4 {
     margin: 0 0 0.75rem 0;
