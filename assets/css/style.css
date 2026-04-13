@@ -195,11 +195,13 @@ body {
     display: none;
 }
 
-.cover-overlay .open-pdf {
+.cover-overlay .open-pdf,
+.cover-overlay .open-detail {
     display: inline-flex;
 }
 
-.open-pdf {
+.open-pdf,
+.open-detail {
     margin-top: auto;
     align-self: flex-start;
     padding: 0.6rem 1rem;
@@ -209,8 +211,7 @@ body {
     border-radius: 999px;
     font-size: 0.95rem;
     transition: background 0.25s ease;
-}
-
+.open-detail:hover,
 .open-pdf:hover {
     background: #1f2937;
 }
@@ -312,6 +313,54 @@ header p {
 
 .detail-main {
     padding: 0 1.5rem 3rem;
+}
+
+.section-kicker {
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-bottom: 0.5rem;
+}
+
+.pdf-preview {
+    max-width: 1100px;
+    margin: 0 auto 3rem;
+    background: #ffffff;
+    border-radius: var(--card-radius);
+    padding: 2.5rem;
+    border: 1px solid #e5e7eb;
+    box-shadow: var(--card-shadow);
+}
+
+.pdf-preview header {
+    margin-bottom: 1.5rem;
+}
+
+.pdf-frame {
+    border-radius: 1.5rem;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    background: #0f172a;
+}
+
+.pdf-frame iframe {
+    width: 100%;
+    height: 600px;
+    border: none;
+    background: #ffffff;
+}
+
+.pdf-preview__note {
+    margin-top: 0.75rem;
+    text-align: right;
+    font-size: 0.95rem;
+    color: #475569;
+}
+
+.pdf-preview__note a {
+    color: #0f62fe;
+    font-weight: 600;
 }
 
 .ficha {
@@ -523,7 +572,8 @@ footer {
     color: #475569;
 }
 
-.open-pdf {
+.open-pdf,
+.open-detail {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -538,6 +588,7 @@ footer {
     transition: background 0.25s ease;
 }
 
+.open-detail:hover,
 .open-pdf:hover {
     background: #1f2937;
 }

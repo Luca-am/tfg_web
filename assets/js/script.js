@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function() {
     requestAnimationFrame(() => {
         renderPdfCovers()
             .then(() => {
-                addPdfOpenButtons();
                 decorateBookCards();
             })
             .catch((error) => {
@@ -19,7 +18,8 @@ function decorateBookCards() {
         const wrapper = card.querySelector('.cover-wrapper');
         const title = card.querySelector('h4');
         const author = card.querySelector('p');
-        const button = card.querySelector('.open-pdf');
+        const detailLink = card.querySelector('p a');
+        const titleText = title?.textContent ? title.textContent.trim() : '';
 
         if (!wrapper || !title || !author) return;
         if (wrapper.querySelector('.cover-overlay')) return;
@@ -39,9 +39,15 @@ function decorateBookCards() {
         content.appendChild(titleClone);
         content.appendChild(authorClone);
 
-        if (button) {
-            button.className = 'open-pdf cover-overlay__button';
-            content.appendChild(button);
+        if (detailLink) {
+            const detailButton = detailLink.cloneNode(true);
+            detailButton.className = 'open-detail cover-overlay__button';
+            detailButton.textContent = detailLink.dataset.ctaLabel || 'Descobreix el llibre';
+            detailButton.setAttribute(
+                'aria-label',
+                `Descobreix més sobre ${titleText || 'aquest llibre'}`
+            );
+            content.appendChild(detailButton);
         }
 
         overlay.appendChild(content);
@@ -49,6 +55,10 @@ function decorateBookCards() {
 
         title.style.display = 'none';
         author.style.display = 'none';
+
+        if (detailLink && detailLink.closest('p')) {
+            detailLink.closest('p').style.display = 'none';
+        }
     });
 }
 
@@ -142,22 +152,6 @@ function wrapText(context, text, maxWidth) {
 function renderPdfCovers() {
     const canvases = document.querySelectorAll('.cover-canvas');
     return Promise.allSettled(Array.from(canvases).map(renderPdfCover));
-}
-
-function addPdfOpenButtons() {
-    document.querySelectorAll('.book-card[data-pdf-src]').forEach((card) => {
-        const pdfSrc = card.dataset.pdfSrc;
-        if (!pdfSrc) return;
-        if (card.querySelector('.open-pdf')) return;
-
-        const link = document.createElement('a');
-        link.className = 'open-pdf';
-        link.href = encodeURI(pdfSrc);
-        link.target = '_blank';
-        link.rel = 'noopener noreferrer';
-        link.textContent = 'Obrir PDF';
-        card.appendChild(link);
-    });
 }
 
 
