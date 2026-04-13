@@ -1,14 +1,17 @@
 // Script per a visualitzacions de portada de PDF
 
 document.addEventListener('DOMContentLoaded', function() {
-    renderPdfCovers()
-        .then(() => {
-            addPdfOpenButtons();
-            decorateBookCards();
-        })
-        .catch((error) => {
-            console.error('Error al renderitzar portades PDF:', error);
-        });
+    // Esperar a que el layout se calcule completamente
+    requestAnimationFrame(() => {
+        renderPdfCovers()
+            .then(() => {
+                addPdfOpenButtons();
+                decorateBookCards();
+            })
+            .catch((error) => {
+                console.error('Error al renderitzar portades PDF:', error);
+            });
+    });
 });
 
 function decorateBookCards() {
@@ -51,48 +54,89 @@ function decorateBookCards() {
 
 async function renderPdfCover(canvas) {
     const card = canvas.closest('.book-card');
-    const pdfSrc = card?.dataset?.pdfSrc?.trim();
-    if (!pdfSrc) {
+    const title = card?.querySelector('h4')?.textContent?.trim();
+    const wrapper = canvas.parentElement;
+    
+    if (!title) {
+        console.warn('No título disponible para la portada');
         return;
     }
 
-    if (typeof pdfjsLib === 'undefined') {
-        console.error('pdfjsLib no està definit. Comprova la inclusió de PDF.js.');
-        return;
+    let wrapperHeight = wrapper.clientHeight;
+    let wrapperWidth = wrapper.clientWidth;
+    
+    // Valores por defecto si el wrapper no tiene dimensiones calculadas
+    if (wrapperHeight === 0) wrapperHeight = 340;
+    if (wrapperWidth === 0) wrapperWidth = 250;
+    
+    // Establecer dimensiones del canvas
+    canvas.width = wrapperWidth * 2; // Usar resolución más alta para mejor text rendering
+    canvas.height = wrapperHeight * 2;
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.display = 'block';
+    
+    const context = canvas.getContext('2d');
+    
+    // Fondo blanco
+    context.fillStyle = '#ffffff';
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    
+    // Dibujar borde sutil
+    context.strokeStyle = '#d1d5db';
+    context.lineWidth = 2;
+    context.strokeRect(0, 0, canvas.width, canvas.height);
+    
+    // Configurar texto
+    context.fillStyle = '#1f2937';
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';
+    
+    // Ajustar tamaño de fuente dinámicamente
+    let fontSize = 64;
+    let lines = [];
+    let maxWidth = canvas.width - 60; // Margen
+    
+    // Dividir el título en líneas si es muy largo
+    do {
+        context.font = `bold ${fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
+        lines = wrapText(context, title, maxWidth);
+        if (lines.length > 5 || fontSize < 24) break;
+        fontSize -= 4;
+    } while (lines.length > 4);
+    
+    // Dibujar líneas de texto centradas verticalmente
+    const lineHeight = fontSize * 1.2;
+    const totalHeight = lines.length * lineHeight;
+    const startY = (canvas.height - totalHeight) / 2;
+    
+    lines.forEach((line, i) => {
+        context.fillText(line, canvas.width / 2, startY + i * lineHeight);
+    });
+}
+
+function wrapText(context, text, maxWidth) {
+    const words = text.split(' ');
+    const lines = [];
+    let currentLine = '';
+    
+    words.forEach(word => {
+        const testLine = currentLine ? `${currentLine} ${word}` : word;
+        const metrics = context.measureText(testLine);
+        
+        if (metrics.width > maxWidth && currentLine) {
+            lines.push(currentLine);
+            currentLine = word;
+        } else {
+            currentLine = testLine;
+        }
+    });
+    
+    if (currentLine) {
+        lines.push(currentLine);
     }
-
-    try {
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist/build/pdf.worker.min.js';
-        const encodedPath = pdfSrc.split('/').map(segment => encodeURIComponent(segment)).join('/');
-        const pdfUrl = new URL(encodedPath, window.location.href).href;
-        console.log('PDF cover load:', pdfUrl);
-        const loadingTask = pdfjsLib.getDocument({ url: pdfUrl });
-        const pdf = await loadingTask.promise;
-        const page = await pdf.getPage(1);
-
-        const wrapper = canvas.parentElement;
-        const wrapperHeight = wrapper.clientHeight;
-
-        const baseViewport = page.getViewport({ scale: 1 });
-        const scale = wrapperHeight / baseViewport.height;
-        const viewport = page.getViewport({ scale });
-
-        canvas.width = viewport.width;
-        canvas.height = viewport.height;
-        canvas.style.width = 'auto';
-        canvas.style.height = '100%';
-        canvas.style.display = 'block';
-
-        const context = canvas.getContext('2d');
-        const renderTask = page.render({ canvasContext: context, viewport });
-        await renderTask.promise;
-    } catch (error) {
-        canvas.style.background = '#e2e8f0';
-        canvas.style.width = '100%';
-        canvas.style.height = '100%';
-        canvas.style.display = 'block';
-        console.error('No es pot renderitzar el PDF:', pdfSrc, error);
-    }
+    
+    return lines;
 }
 
 function renderPdfCovers() {
