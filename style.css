@@ -381,5 +381,139 @@ footer {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
+
+.app-page {
+    padding-top: 0;
+}
+
+.app-carousel-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.app-carousel {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 1rem;
+    flex: 1;
+}
+
+.app-card {
+    min-width: 280px;
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    background: #ffffff;
+    border-radius: 24px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 16px 30px rgba(15, 23, 42, 0.08);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.app-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 22px 48px rgba(15, 23, 42, 0.14);
+}
+
+.app-card a {
+    color: inherit;
+    text-decoration: none;
+    display: block;
+    padding: 1.5rem;
+}
+
+.app-card__media {
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+    display: grid;
+    place-items: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1rem;
+}
+
+.app-card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+    display: block;
+}
+
+.app-card--zotero .app-card__media {
+    background: #ff6b6b;
+}
+
+.app-card--atlasti .app-card__media {
+    background: #0f62fe;
+}
+
+.app-card--drive .app-card__media {
+    background: #0f9d58;
+}
+
+.app-card--antropoblue .app-card__media {
+    background: #7c3aed;
+}
+
+.app-card__body h2 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.5rem;
+}
+
+.app-card__body p {
+    margin: 0;
+    color: #475569;
+}
+
+.carousel-control {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    color: #0f172a;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.carousel-control:hover {
+    background: #f8fafc;
+    transform: scale(1.05);
+}
+
+.app-detail h2 {
+    margin-top: 2rem;
+    font-size: 1.6rem;
+}
+
+.app-detail p {
+    margin: 0.75rem 0 0;
+    color: #475569;
+}
+
+.app-detail a {
+    color: #0f62fe;
+}
+
+@media (max-width: 768px) {
+    .app-carousel-wrapper {
+        flex-direction: column;
+    }
+
+    .carousel-control {
+        width: 100%;
+        border-radius: 16px;
+    }
+}
 </content>
 <parameter name="filePath">c:\Users\Luca\OneDrive\Documents\GitHub\tfg_web\style.css

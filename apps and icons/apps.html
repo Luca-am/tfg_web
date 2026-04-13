@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eines del TFG</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <header>
+        <h1>Eines i aplicacions del meu TFG</h1>
+        <p>Un resum de les plataformes que he utilitzat per organitzar la recerca, analitzar dades i produir el treball final.</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="../main.html">Inici</a></li>
+            <li><a href="apps.html">Apps</a></li>
+        </ul>
+    </nav>
+
+    <section class="container app-page">
+        <div class="container h">
+            <h1>Eines utilitzades</h1>
+            <p>Fes clic en cada app per anar a la pàgina corresponent amb la informació de privacitat, descàrrega i l'ús que n'he fet.</p>
+        </div>
+
+        <div class="app-carousel-wrapper">
+            <button class="carousel-control prev" data-target="app-carousel">‹</button>
+            <div class="app-carousel" id="app-carousel">
+                <article class="app-card app-card--zotero">
+                    <a href="ZOTERO/zotero.html">
+                        <div class="app-card__media"><img src="ZOTERO/zotero.jpg" alt="Zotero"></div>
+                        <div class="app-card__body">
+                            <h2>Zotero</h2>
+                            <p>Gestor de bibliografia i notes de recerca.</p>
+                        </div>
+                    </a>
+                </article>
+
+                <article class="app-card app-card--atlasti">
+                    <a href="ATLASTI/atlasti.html">
+                        <div class="app-card__media"><img src="ATLASTI/Atlasti.png" alt="ATLAS.ti"></div>
+                        <div class="app-card__body">
+                            <h2>ATLAS.ti</h2>
+                            <p>Programari d'anàlisi de dades qualitatives.</p>
+                        </div>
+                    </a>
+                </article>
+
+                <article class="app-card app-card--drive">
+                    <a href="drive.html">
+                        <div class="app-card__media">D</div>
+                        <div class="app-card__body">
+                            <h2>Google Drive</h2>
+                            <p>Emmagatzematge en núvol i col·laboració de documents.</p>
+                        </div>
+                    </a>
+                </article>
+
+                <article class="app-card app-card--antropoblue">
+                    <a href="antropoblue.html">
+                        <div class="app-card__media">B</div>
+                        <div class="app-card__body">
+                            <h2>AntropoBlue</h2>
+                            <p>Eina de suport per a investigació antropològica i visual.</p>
+                        </div>
+                    </a>
+                </article>
+            </div>
+            <button class="carousel-control next" data-target="app-carousel">›</button>
+        </div>
+
+        <section class="app-notes">
+            <h2>Altres notes</h2>
+            <p>Aquesta pàgina és una plantilla per a cada app del projecte. Cada enllaç obre una pàgina independent amb la mateixa estructura per facilitar la presentació.</p>
+        </section>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 TFG Eines</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.carousel-control').forEach(button => {
+            button.addEventListener('click', () => {
+                const track = document.getElementById(button.dataset.target);
+                if (!track) return;
+                const offset = button.classList.contains('next') ? 360 : -360;
+                track.scrollBy({ left: offset, behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
