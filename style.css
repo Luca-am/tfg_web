@@ -515,5 +515,72 @@ footer {
         border-radius: 16px;
     }
 }
+
+/* Privacy Rating Styles */
+.privacy-rating {
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 20px;
+    padding: 2rem;
+    margin: 2rem 0;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.privacy-rating__label {
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: #0f172a;
+}
+
+.privacy-rating__visual {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.privacy-rating__bar {
+    flex: 1;
+    height: 12px;
+    background: #e5e7eb;
+    border-radius: 999px;
+    overflow: hidden;
+    position: relative;
+}
+
+.privacy-rating__fill {
+    height: 100%;
+    border-radius: 999px;
+    transition: width 0.6s ease, background-color 0.6s ease;
+}
+
+.privacy-rating__fill.high {
+    background: linear-gradient(90deg, #10b981, #059669);
+}
+
+.privacy-rating__fill.medium {
+    background: linear-gradient(90deg, #f59e0b, #d97706);
+}
+
+.privacy-rating__fill.low {
+    background: linear-gradient(90deg, #ef4444, #dc2626);
+}
+
+.privacy-rating__score {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0f172a;
+    min-width: 50px;
+    text-align: right;
+}
+
+.privacy-rating__description {
+    font-size: 0.95rem;
+    color: #475569;
+    margin-top: 1rem;
+    font-style: italic;
+}
 </content>
 <parameter name="filePath">c:\Users\Luca\OneDrive\Documents\GitHub\tfg_web\style.css
