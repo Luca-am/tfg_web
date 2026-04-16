@@ -1329,7 +1329,7 @@ section h2 {
     top: auto;
     bottom: calc(100% - 1.9rem);
     left: 50%;
-    width: min(320px, calc(100vw - 2rem));
+    width: min(520px, calc(100vw - 2rem));
     padding: 1rem 1rem 0.9rem;
     border-radius: 20px;
     border: 1px solid rgba(21, 51, 120, 0.14);
@@ -1373,12 +1373,14 @@ section h2 {
     margin: 0;
     padding: 0;
     display: grid;
-    gap: 0.4rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem 1.1rem;
 }
 
 .interview-sheet li {
     display: grid;
     gap: 0.08rem;
+    align-content: start;
 }
 
 .interview-sheet strong {
@@ -1395,6 +1397,17 @@ section h2 {
     font-size: 0.94rem;
     line-height: 1.35;
     text-decoration: none;
+}
+
+@media (max-width: 640px) {
+    .interview-sheet {
+        width: min(360px, calc(100vw - 1.5rem));
+    }
+
+    .interview-sheet ul {
+        grid-template-columns: 1fr;
+        gap: 0.45rem;
+    }
 }
 
 .interview-sheet a:hover,
