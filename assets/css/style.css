@@ -785,13 +785,13 @@ section h2 {
 }
 
 .detail-main {
-    width: min(1260px, calc(100% - 2rem));
+    width: min(1200px, calc(100% - 2rem));
     margin: 0.95rem auto 0;
     padding: 0;
     display: grid;
     grid-template-columns: minmax(0, 0.96fr) minmax(320px, 1.36fr) minmax(240px, 1.05fr);
     gap: 1rem;
-    align-items: start;
+    align-items: stretch;
 }
 
 .section-kicker {
@@ -928,12 +928,29 @@ section h2 {
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
+    min-height: 100%;
 }
 
 .personal-secondary .detail-back-link {
-    background: rgba(11, 35, 102, 0.08);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.48rem;
+    padding: 0.72rem 1.28rem;
+    border-radius: 999px;
+    font-size: 0.99rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    background: rgba(11, 35, 102, 0.1);
     color: var(--ot-blue-900);
-    border-color: rgba(21, 51, 120, 0.24);
+    border-color: rgba(21, 51, 120, 0.28);
+}
+
+.personal-secondary .detail-back-link::before {
+    content: "\2190";
+    font-size: 1rem;
+    line-height: 1;
+    font-weight: 700;
+    transform: translateY(-1px);
 }
 
 /* Apps page */
@@ -1486,10 +1503,12 @@ section,
     .personal-secondary .detail-back-link {
         width: 100%;
         justify-content: center;
+        padding: 0.7rem 1rem;
     }
 
     .personal-secondary {
         align-items: stretch;
+        min-height: auto;
     }
 
     .site-nav__toggle {
