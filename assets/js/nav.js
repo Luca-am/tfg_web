@@ -11,7 +11,7 @@
 
   const pages = [
     { href: base + 'index.html',       label: 'Inici',       key: 'index'       },
-    { href: base + 'entrevistes.html', label: 'Entrevistes', key: 'interviews'  },
+    { href: base + 'interviews.html', label: 'Interviews', key: 'interviews'  },
     { href: base + 'apps.html',        label: 'Apps',        key: 'apps'        },
     { href: base + 'bibliography.html',label: 'Bibliografia', key: 'bibliography'},
     { href: base + 'glossary.html',    label: 'Glossari',    key: 'glossary'    },
@@ -19,7 +19,7 @@
 
   // Determine active section from current path
   function getActiveKey() {
-    if (/entrevistes/.test(path)) return 'interviews';
+    if (/interviews/.test(path)) return 'interviews';
     if (/bibliography/.test(path)) return 'bibliography';
     if (/apps|zotero|atlasti|antropoblue|drive/.test(path)) return 'apps';
     if (/glossary/.test(path)) return 'glossary';

@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
         renderPdfCovers()
             .then(() => {
                 decorateBookCards();
+                initBibliographyFilters();
             })
             .catch((error) => {
                 console.error('Error al renderitzar portades PDF:', error);
@@ -42,7 +43,8 @@ function decorateBookCards() {
         if (detailLink) {
             const detailButton = detailLink.cloneNode(true);
             detailButton.className = 'open-detail cover-overlay__button';
-            detailButton.textContent = detailLink.dataset.ctaLabel || 'Descobreix el llibre';
+            detailButton.textContent = detailLink.dataset.ctaLabel
+                || (card.dataset.type === 'article' ? 'Descobreix l\'article' : 'Descobreix el llibre');
             detailButton.setAttribute(
                 'aria-label',
                 `Descobreix més sobre ${titleText || 'aquest llibre'}`
@@ -152,6 +154,66 @@ function wrapText(context, text, maxWidth) {
 function renderPdfCovers() {
     const canvases = document.querySelectorAll('.cover-canvas');
     return Promise.allSettled(Array.from(canvases).map(renderPdfCover));
+}
+
+function initBibliographyFilters() {
+    const bibliography = document.querySelector('#bibliography');
+
+    if (!bibliography) return;
+
+    const buttons = bibliography.querySelectorAll('.bibliography-filter__button');
+    const cards = bibliography.querySelectorAll('.book-card');
+    const sections = bibliography.querySelectorAll('.bibliography__section');
+    const emptyState = bibliography.querySelector('.bibliography-empty');
+    const state = {
+        type: 'all',
+        theme: 'all'
+    };
+
+    function applyFilters() {
+        let visibleCards = 0;
+
+        cards.forEach((card) => {
+            const matchesType = state.type === 'all' || card.dataset.type === state.type;
+            const matchesTheme = state.theme === 'all' || card.dataset.theme === state.theme;
+            const isVisible = matchesType && matchesTheme;
+
+            card.classList.toggle('is-hidden-by-filter', !isVisible);
+
+            if (isVisible) {
+                visibleCards += 1;
+            }
+        });
+
+        sections.forEach((section) => {
+            const hasVisibleCards = section.querySelector('.book-card:not(.is-hidden-by-filter)');
+            section.classList.toggle('is-hidden-by-filter', !hasVisibleCards);
+        });
+
+        if (emptyState) {
+            emptyState.hidden = visibleCards !== 0;
+        }
+    }
+
+    buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+            const { filterGroup, filterValue } = button.dataset;
+
+            if (!filterGroup || !filterValue) return;
+
+            state[filterGroup] = filterValue;
+
+            buttons.forEach((candidate) => {
+                if (candidate.dataset.filterGroup === filterGroup) {
+                    candidate.classList.toggle('is-active', candidate === button);
+                }
+            });
+
+            applyFilters();
+        });
+    });
+
+    applyFilters();
 }
 
 
