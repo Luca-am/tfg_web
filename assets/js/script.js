@@ -6,8 +6,8 @@ document.addEventListener('DOMContentLoaded', function() {
         renderPdfCovers()
             .then(() => {
                 decorateBookCards();
-                initBibliographyCitations();
                 initBibliographyFilters();
+                initDetailCitations();
             })
             .catch((error) => {
                 console.error('Error al renderitzar portades PDF:', error);
@@ -65,131 +65,105 @@ function decorateBookCards() {
     });
 }
 
-function initBibliographyCitations() {
-    const bibliography = document.querySelector('#bibliography');
+function initDetailCitations() {
+    const bibliographyCard = document.querySelector('.ficha-card.ficha-bib');
 
-    if (!bibliography) return;
-
-    const cards = bibliography.querySelectorAll('.book-card');
-
-    if (!cards.length) return;
-
-    cards.forEach((card) => {
-        hydrateCitationDataset(card);
-
-        const overlayContent = card.querySelector('.cover-overlay__content');
-
-        if (!overlayContent || overlayContent.querySelector('.citation-actions')) {
-            return;
-        }
-
-        const actions = document.createElement('div');
-        actions.className = 'citation-actions';
-
-        const toggle = document.createElement('button');
-        toggle.type = 'button';
-        toggle.className = 'citation-toggle';
-        toggle.textContent = 'Cita APA';
-        toggle.setAttribute('aria-expanded', 'false');
-        toggle.setAttribute('aria-haspopup', 'true');
-
-        const menu = document.createElement('div');
-        menu.className = 'citation-menu';
-        menu.hidden = true;
-
-        const intertextButton = document.createElement('button');
-        intertextButton.type = 'button';
-        intertextButton.className = 'citation-menu__option';
-        intertextButton.dataset.citationKind = 'intertextual';
-        intertextButton.textContent = 'Cita intertextual';
-
-        const referenceButton = document.createElement('button');
-        referenceButton.type = 'button';
-        referenceButton.className = 'citation-menu__option';
-        referenceButton.dataset.citationKind = 'reference';
-        referenceButton.textContent = 'Referència bibliogràfica';
-
-        const preview = document.createElement('div');
-        preview.className = 'citation-preview';
-
-        const previewLabel = document.createElement('p');
-        previewLabel.className = 'citation-preview__label';
-        previewLabel.textContent = 'Previsualització';
-
-        const previewText = document.createElement('p');
-        previewText.className = 'citation-preview__text';
-
-        const feedback = document.createElement('p');
-        feedback.className = 'citation-feedback';
-        feedback.setAttribute('aria-live', 'polite');
-
-        preview.appendChild(previewLabel);
-        preview.appendChild(previewText);
-        menu.appendChild(intertextButton);
-        menu.appendChild(referenceButton);
-        menu.appendChild(preview);
-        actions.appendChild(toggle);
-        actions.appendChild(menu);
-        actions.appendChild(feedback);
-        overlayContent.appendChild(actions);
-    });
-
-    let openMenu = null;
-
-    function closeOpenMenu() {
-        if (!openMenu) return;
-
-        const toggle = openMenu.parentElement?.querySelector('.citation-toggle');
-        openMenu.hidden = true;
-        openMenu.parentElement?.classList.remove('is-open');
-
-        if (toggle) {
-            toggle.setAttribute('aria-expanded', 'false');
-        }
-
-        openMenu = null;
+    if (!bibliographyCard || bibliographyCard.querySelector('.citation-actions')) {
+        return;
     }
 
-    bibliography.addEventListener('click', async (event) => {
-        const toggle = event.target.closest('.citation-toggle');
+    hydrateDetailCitationDataset(bibliographyCard, document);
 
-        if (toggle) {
-            const actions = toggle.closest('.citation-actions');
-            const menu = actions?.querySelector('.citation-menu');
-            const defaultOption = actions?.querySelector('.citation-menu__option[data-citation-kind="intertextual"]');
+    const metaList = bibliographyCard.querySelector('.meta-list');
+    const heroActions = document.querySelector('.book-hero__actions');
+    const actions = document.createElement('div');
+    actions.className = 'citation-actions citation-actions--detail';
 
-            if (!menu) return;
+    if (heroActions) {
+        actions.classList.add('citation-actions--hero');
 
-            const shouldOpen = menu.hidden;
-            closeOpenMenu();
+        const downloadButton = heroActions.querySelector('a[download]');
+        const backButton = heroActions.querySelector('a.secondary');
+        const backTarget = document.querySelector('.personal-secondary');
 
-            if (shouldOpen) {
-                menu.hidden = false;
-                actions.classList.add('is-open');
-                toggle.setAttribute('aria-expanded', 'true');
-                setCitationPreview(cardFromActions(actions), defaultOption?.dataset.citationKind || 'intertextual');
-                setCitationOptionState(actions, defaultOption?.dataset.citationKind || 'intertextual');
-                openMenu = menu;
-            }
-
-            return;
+        if (downloadButton) {
+            downloadButton.classList.add('hero-action-download');
         }
 
+        if (backButton) {
+            backButton.classList.add('detail-back-link');
+
+            if (backTarget) {
+                backTarget.appendChild(backButton);
+            }
+        }
+    }
+
+    const menu = document.createElement('div');
+    menu.className = 'citation-menu citation-menu--detail';
+
+    const intertextButton = document.createElement('button');
+    intertextButton.type = 'button';
+    intertextButton.className = 'citation-menu__option';
+    intertextButton.dataset.citationKind = 'intertextual';
+    intertextButton.textContent = 'Cita intertextual';
+
+    const referenceButton = document.createElement('button');
+    referenceButton.type = 'button';
+    referenceButton.className = 'citation-menu__option';
+    referenceButton.dataset.citationKind = 'reference';
+    referenceButton.textContent = 'Referència bibliogràfica';
+
+    const preview = document.createElement('div');
+    preview.className = 'citation-preview';
+    preview.hidden = true;
+
+    const previewLabel = document.createElement('p');
+    previewLabel.className = 'citation-preview__label';
+    previewLabel.textContent = 'Previsualització';
+
+    const previewText = document.createElement('p');
+    previewText.className = 'citation-preview__text';
+
+    const feedback = document.createElement('p');
+    feedback.className = 'citation-feedback';
+    feedback.setAttribute('aria-live', 'polite');
+
+    preview.appendChild(previewLabel);
+    preview.appendChild(previewText);
+    menu.appendChild(intertextButton);
+    menu.appendChild(referenceButton);
+    actions.appendChild(menu);
+    actions.appendChild(preview);
+    actions.appendChild(feedback);
+
+    if (heroActions) {
+        const downloadButton = heroActions.querySelector('.hero-action-download');
+
+        if (downloadButton) {
+            heroActions.insertBefore(actions, downloadButton);
+        } else {
+            heroActions.prepend(actions);
+        }
+    } else if (metaList) {
+        metaList.insertAdjacentElement('afterend', actions);
+    } else {
+        bibliographyCard.appendChild(actions);
+    }
+
+    actions.addEventListener('click', async (event) => {
         const option = event.target.closest('.citation-menu__option');
 
         if (!option) {
             return;
         }
 
-        const card = option.closest('.book-card');
-        const actions = option.closest('.citation-actions');
-        const feedback = actions?.querySelector('.citation-feedback');
         const citationKind = option.dataset.citationKind;
-        const citationText = buildApaCitation(card, citationKind);
+        const citationText = buildApaCitation(bibliographyCard, citationKind);
 
         if (!citationText) {
             showCitationFeedback(feedback, 'No s\'ha pogut generar la cita.', true);
-            closeOpenMenu();
+            hideCitationPreview(actions);
             return;
         }
 
@@ -199,24 +173,14 @@ function initBibliographyCitations() {
         } catch (error) {
             showCitationFeedback(feedback, 'No s\'ha pogut copiar.');
         }
-
-        closeOpenMenu();
     });
 
-    document.addEventListener('click', (event) => {
-        if (!bibliography.contains(event.target)) {
-            closeOpenMenu();
-        }
+    actions.addEventListener('mouseover', handleCitationPreviewUpdate);
+    actions.addEventListener('focusin', handleCitationPreviewUpdate);
+    actions.addEventListener('mouseleave', () => {
+        clearCitationOptionState(actions);
+        hideCitationPreview(actions);
     });
-
-    document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape') {
-            closeOpenMenu();
-        }
-    });
-
-    bibliography.addEventListener('mouseover', handleCitationPreviewUpdate);
-    bibliography.addEventListener('focusin', handleCitationPreviewUpdate);
 
     function handleCitationPreviewUpdate(event) {
         const option = event.target.closest('.citation-menu__option');
@@ -225,29 +189,61 @@ function initBibliographyCitations() {
             return;
         }
 
-        const actions = option.closest('.citation-actions');
-        const card = cardFromActions(actions);
         const citationKind = option.dataset.citationKind;
-
-        setCitationPreview(card, citationKind);
+        setCitationPreview(bibliographyCard, citationKindToSource(citationKind), actions);
         setCitationOptionState(actions, citationKind);
     }
+
+    actions.addEventListener('focusout', () => {
+        window.requestAnimationFrame(() => {
+            if (!actions.contains(document.activeElement)) {
+                clearCitationOptionState(actions);
+                hideCitationPreview(actions);
+            }
+        });
+    });
+
+    document.addEventListener('click', (event) => {
+        if (!actions.contains(event.target)) {
+            clearCitationOptionState(actions);
+            hideCitationPreview(actions);
+        }
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            clearCitationOptionState(actions);
+            hideCitationPreview(actions);
+        }
+    });
 }
 
-function cardFromActions(actions) {
-    return actions?.closest('.book-card') || null;
+function citationKindToSource(citationKind) {
+    return citationKind || 'intertextual';
 }
 
-function setCitationPreview(card, citationKind) {
-    if (!card) return;
+function setCitationPreview(source, citationKind, actionsNode) {
+    if (!source) return;
 
-    const actions = card.querySelector('.citation-actions');
+    const actions = actionsNode || source.querySelector('.citation-actions');
+    const preview = actions?.querySelector('.citation-preview');
     const previewText = actions?.querySelector('.citation-preview__text');
 
-    if (!previewText) return;
+    if (!preview || !previewText) return;
 
-    const preview = buildApaCitation(card, citationKind);
-    previewText.textContent = preview || 'No s\'ha pogut generar la cita.';
+    const previewValue = buildApaCitation(source, citationKind);
+    previewText.textContent = previewValue || 'No s\'ha pogut generar la cita.';
+    preview.hidden = false;
+}
+
+function hideCitationPreview(actions) {
+    if (!actions) return;
+
+    const preview = actions.querySelector('.citation-preview');
+
+    if (!preview) return;
+
+    preview.hidden = true;
 }
 
 function setCitationOptionState(actions, citationKind) {
@@ -260,26 +256,62 @@ function setCitationOptionState(actions, citationKind) {
     });
 }
 
-function hydrateCitationDataset(card) {
-    const rawTitle = card.querySelector('h4')?.textContent?.trim() || '';
-    const rawMeta = card.querySelector('p')?.textContent?.trim() || '';
-    const detailPath = card.querySelector('a[href]')?.getAttribute('href') || '';
-    const { author, year } = splitAuthorAndYear(rawMeta);
+function clearCitationOptionState(actions) {
+    if (!actions) return;
 
-    if (rawTitle && !card.dataset.citationTitle) {
-        card.dataset.citationTitle = rawTitle;
+    actions.querySelectorAll('.citation-menu__option').forEach((option) => {
+        option.classList.remove('is-active');
+        option.setAttribute('aria-pressed', 'false');
+    });
+}
+
+function hydrateDetailCitationDataset(target, doc) {
+    const metadata = extractCitationMetadataFromDocument(doc);
+    const title = doc.querySelector('h1')?.textContent?.trim() || '';
+    const subtitle = doc.querySelector('.hero-subtitle')?.textContent?.trim() || '';
+    const pathname = window.location.pathname.replace(/\\/g, '/');
+    const inferredType = /\/articles\//.test(pathname) || /article/i.test(subtitle) ? 'article' : 'book';
+
+    if (title && !target.dataset.citationTitle) {
+        target.dataset.citationTitle = title;
     }
 
-    if (author && !card.dataset.citationAuthor) {
-        card.dataset.citationAuthor = author;
+    if (metadata.author && !target.dataset.citationAuthor) {
+        target.dataset.citationAuthor = metadata.author;
     }
 
-    if (year && !card.dataset.citationYear) {
-        card.dataset.citationYear = year;
+    if (metadata.year && !target.dataset.citationYear) {
+        target.dataset.citationYear = metadata.year;
     }
 
-    if (detailPath && !card.dataset.citationDetailUrl) {
-        card.dataset.citationDetailUrl = detailPath;
+    target.dataset.type = target.dataset.type || inferredType;
+
+    if (metadata.journal) {
+        target.dataset.citationJournal = metadata.journal;
+    }
+
+    if (metadata.publisher) {
+        target.dataset.citationPublisher = metadata.publisher;
+    }
+
+    if (metadata.volume) {
+        target.dataset.citationVolume = metadata.volume;
+    }
+
+    if (metadata.issue) {
+        target.dataset.citationIssue = metadata.issue;
+    }
+
+    if (metadata.pages) {
+        target.dataset.citationPages = metadata.pages;
+    }
+
+    if (metadata.doi) {
+        target.dataset.citationDoi = metadata.doi;
+    }
+
+    if (metadata.url) {
+        target.dataset.citationUrl = metadata.url;
     }
 }
 
@@ -302,8 +334,6 @@ function splitAuthorAndYear(rawMeta) {
 
 function buildApaCitation(card, kind) {
     if (!card) return '';
-
-    hydrateCitationDataset(card);
 
     const author = (card.dataset.citationAuthor || '').trim();
     const year = normalizeCitationYear(card.dataset.citationYear || 's.d.');
@@ -899,11 +929,11 @@ function extractCitationMetadataFromDocument(doc) {
         }
     });
 
-    const pdfLink = doc.querySelector('.book-hero__actions a[download]')?.getAttribute('href') || '';
-    const backLink = doc.querySelector('.book-hero__actions a.secondary')?.getAttribute('href') || '';
+    const pdfLink = doc.querySelector('.book-hero__actions a[download]')?.href || '';
+    const canonicalUrl = window.location.href;
 
     if (!metadata.url) {
-        metadata.url = pdfLink || backLink;
+        metadata.url = pdfLink || canonicalUrl;
     }
 
     return metadata;
