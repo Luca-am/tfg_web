@@ -6,6 +6,18 @@
     --ot-orange-500: #ff7a2f;
     --ot-orange-600: #ff5f24;
     --ot-white: #ffffff;
+    --ot-poster-blue-soft: #dce6ff;
+    --ot-poster-blue-strong: #afc4ff;
+    --ot-poster-indigo-soft: #e5e1ff;
+    --ot-poster-indigo-strong: #c8bfff;
+    --ot-poster-violet-soft: #f2defd;
+    --ot-poster-violet-strong: #ddb7fb;
+    --ot-poster-amber-soft: #ffe7be;
+    --ot-poster-amber-strong: #ffc26b;
+    --ot-poster-coral-soft: #ffd9ca;
+    --ot-poster-coral-strong: #ffab82;
+    --ot-poster-cyan-soft: #d8efff;
+    --ot-poster-cyan-strong: #a3d6ff;
     --ink-900: #0f1731;
     --ink-700: #334165;
     --ink-500: #5f6f93;
@@ -271,27 +283,27 @@ section h2 {
 }
 
 .glossary-card--blue {
-    background: linear-gradient(180deg, #eef5ff 0%, #ddeaff 100%);
+    background: linear-gradient(180deg, var(--ot-poster-blue-soft) 0%, var(--ot-poster-blue-strong) 100%);
 }
 
 .glossary-card--yellow {
-    background: linear-gradient(180deg, #fff5cc 0%, #ffe89d 100%);
+    background: linear-gradient(180deg, var(--ot-poster-amber-soft) 0%, var(--ot-poster-amber-strong) 100%);
 }
 
 .glossary-card--pink {
-    background: linear-gradient(180deg, #ffe0ea 0%, #ffc7d9 100%);
+    background: linear-gradient(180deg, var(--ot-poster-violet-soft) 0%, var(--ot-poster-violet-strong) 100%);
 }
 
 .glossary-card--mint {
-    background: linear-gradient(180deg, #ddf8ef 0%, #c3f0e0 100%);
+    background: linear-gradient(180deg, var(--ot-poster-cyan-soft) 0%, var(--ot-poster-cyan-strong) 100%);
 }
 
 .glossary-card--orange {
-    background: linear-gradient(180deg, #ffe7d2 0%, #ffd0a7 100%);
+    background: linear-gradient(180deg, var(--ot-poster-coral-soft) 0%, var(--ot-poster-coral-strong) 100%);
 }
 
 .glossary-card--lavender {
-    background: linear-gradient(180deg, #efe5ff 0%, #dccbff 100%);
+    background: linear-gradient(180deg, var(--ot-poster-indigo-soft) 0%, var(--ot-poster-indigo-strong) 100%);
 }
 
 .glossary-card__letter {
