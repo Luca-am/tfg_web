@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="title desc">
+  <title id="title">Avatar de Marc Vives</title>
+  <desc id="desc">Avatar circular amb les inicials MV</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#102c73"/>
+      <stop offset="100%" stop-color="#2e74ff"/>
+    </linearGradient>
+  </defs>
+  <circle cx="80" cy="80" r="80" fill="url(#bg)"/>
+  <circle cx="80" cy="60" r="24" fill="#eaf2ff" opacity="0.96"/>
+  <path d="M30 130c10-24 29-36 50-36s40 12 50 36" fill="#eaf2ff" opacity="0.96"/>
+  <text x="80" y="149" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#eef4ff">MV</text>
+</svg>

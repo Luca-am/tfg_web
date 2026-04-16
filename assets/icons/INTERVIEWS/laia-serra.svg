@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="title desc">
+  <title id="title">Avatar de Laia Serra</title>
+  <desc id="desc">Avatar circular amb les inicials LS</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ff7a2f"/>
+      <stop offset="100%" stop-color="#c42847"/>
+    </linearGradient>
+  </defs>
+  <circle cx="80" cy="80" r="80" fill="url(#bg)"/>
+  <circle cx="80" cy="64" r="26" fill="#fff2ea" opacity="0.95"/>
+  <path d="M34 131c8-25 27-38 46-38s38 13 46 38" fill="#fff2ea" opacity="0.95"/>
+  <text x="80" y="149" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#fff6f2">LS</text>
+</svg>
