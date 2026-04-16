@@ -1,166 +1,457 @@
 <!DOCTYPE html>
-
 <html lang="ca">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Presentació de la Tesi - [Títol de la Tesi]</title>
+<title>Bibliografia i Referents - Calaix de Sastre</title>
+<meta name="theme-color" content="#E7473C">
 <link href="assets/css/style.css" rel="stylesheet"/>
+<style>
+/* Additional styles for bibliography page */
+.site-nav {
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: all 0.3s ease;
+}
+
+.site-nav__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.site-nav__brand {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #E7473C;
+  text-decoration: none;
+}
+
+.site-nav__links {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-nav__links li {
+  margin-left: 1.5rem;
+}
+
+.site-nav__links a {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.site-nav__links a:hover,
+.site-nav__links a.active {
+  color: #E7473C;
+}
+
+.site-nav__links a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #E7473C;
+}
+
+.site-nav__toggle {
+  display: none;
+  flex-direction: column;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.site-nav__toggle span {
+  width: 25px;
+  height: 3px;
+  background-color: #333;
+  margin: 3px 0;
+  transition: all 0.3s ease;
+}
+
+.page-header {
+  background-color: #f9f9f9;
+  padding: 2rem 0;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.page-header h1 {
+  margin: 0 0 0.5rem 0;
+  color: #333;
+  font-size: 2.5rem;
+}
+
+.page-header p {
+  margin: 0;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.bibliography-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.bibliography__section {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.bibliography__section:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.section-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.section-header h2 {
+  margin: 0 0 0.5rem 0;
+  color: #333;
+}
+
+.section-header .meta {
+  margin: 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.bookshelf {
+  padding: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1.5rem;
+}
+
+.book-card {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+}
+
+.book-card:hover {
+  transform: scale(1.05);
+}
+
+.cover-wrapper {
+  position: relative;
+  aspect-ratio: 2/3;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+}
+
+.cover-wrapper.empty {
+  background-color: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+}
+
+.book-card h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+  line-height: 1.3;
+  color: #333;
+}
+
+.book-card p {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.book-card a {
+  color: #E7473C;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.book-card a:hover {
+  color: #c0382e;
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .site-nav__toggle {
+    display: flex;
+  }
+  
+  .site-nav__links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+  }
+  
+  .site-nav__links.active {
+    display: flex;
+  }
+  
+  .site-nav__links li {
+    margin: 0.5rem 0;
+  }
+  
+  .page-header h1 {
+    font-size: 2rem;
+  }
+  
+  .bibliography-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .bookshelf {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.shelf {
+  scroll-margin-top: 100px;
+}
+</style>
 <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist/build/pdf.min.js"></script>
 <script defer="" src="assets/js/script.js"></script>
 </head>
-<body><nav class="site-nav"><div class="site-nav__inner"><a class="site-nav__brand" href="index.html">TFG ? Eines</a><ul class="site-nav__links"><li><a href="index.html">Inici</a></li><li><a href="apps.html">Apps</a></li><li><a href="bibliography.html">Bibliografia</a></li><li><a href="glossary.html">Glossari</a></li></ul></div></nav>
-<header>
-<h1>Presentació Visual de la Meva Tesi</h1>
-<p>Una exploració visual inspirada en el data journalism de The Pudding</p>
+<body>
+<nav class="site-nav">
+  <div class="site-nav__inner">
+    <a class="site-nav__brand" href="index.html">TFG ? Eines</a>
+    <button class="site-nav__toggle" aria-label="Toggle navigation">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <ul class="site-nav__links">
+      <li><a href="index.html">Inici</a></li>
+      <li><a href="apps.html">Apps</a></li>
+      <li><a href="bibliography.html" class="active">Bibliografia</a></li>
+      <li><a href="glossary.html">Glossari</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="container">
+    <h1>Bibliografia i Referents</h1>
+    <p>Quatre prestatgeries temàtiques amb la portada real o marcador visual de cada obra.</p>
+  </div>
 </header>
 
 <section class="container bibliography" id="bibliography">
-<header class="container h">
-<h1>bibliografia i referents</h1>
-<p>Quatre prestatgeries temàtiques amb la portada real o marcador visual de cada obra.</p>
-</header>
 <div class="bibliography-grid">
-<article class="bibliography__section shelf shelf--fandom">
-<header class="section-header">
-<h2 contenteditable="true">Fandom-Religiò</h2>
-<p class="meta">Textos sobre culte, identitat i congregació fan.</p>
-</header>
-<div class="bookshelf">
-<article class="book-card" data-pdf-src="bibliografia/FANDOM-RELIGIÓ/Canals - 2014 - Dioses de tarifa plana. El culto a María Lionza y Las Nuevas Tecnologías.pdf">
-<div class="cover-wrapper"><canvas class="cover-canvas"></canvas></div>
-<h4>Dioses de Tarifa Plana: El culto a María Lionza i les noves tecnologies</h4>
-<p>Canals, Roger</p>
-<p><a href="bibliography/books/canals-2014-dioses-tarifa-plana.html">Veure fitxa</a></p>
-</article>
-<article class="book-card" data-pdf-src="bibliografia/FANDOM-RELIGIÓ/Jennifer Otter Bickerdike - The Secular Religion of Fandom (2015, SAGE) - libgen.li.pdf">
-<div class="cover-wrapper"><canvas class="cover-canvas"></canvas></div>
-<h4>The Secular Religion of Fandom: Pop Culture Pilgrim</h4>
-<p>Bickerdike, Jennifer Otter</p>
-<p><a href="bibliography/books/bickerdike-2015-secular-religion-fandom.html">Veure fitxa</a></p>
-</article>
-</div>
-</article>
-<article class="bibliography__section shelf shelf--theory">
-<header class="section-header">
-<h2 contenteditable="true">Marc Teòric General</h2>
-<p class="meta">Lectures teòriques de referència per al marc general.</p>
-</header>
-<div class="bookshelf">
-<article class="book-card">
-<div class="cover-wrapper empty">📕</div>
-<h4>Politics, Power and Ethics: Butler i Connolly</h4>
-<p>Butler, Judith i Connolly, William E.</p>
-<p><a href="bibliography/books/butler-connolly-politics-power-ethics.html">Veure fitxa</a></p>
-</article>
-<article class="book-card" data-pdf-src="bibliografia/MARC TEÒRIC GENERAL/Debord - La sociedad del espectáculo.pdf">
-<div class="cover-wrapper"><canvas class="cover-canvas"></canvas></div>
-<h4>La sociedad del espectáculo</h4>
-<p>Debord, Guy</p>
-<p><a href="bibliography/books/debord-sociedad-espectaculo.html">Veure fitxa</a></p>
-</article>
-<article class="book-card" data-pdf-src="bibliografia/MARC TEÒRIC GENERAL/Marx et al. - El capital crítica de la economía política.pdf">
-<div class="cover-wrapper"><canvas class="cover-canvas"></canvas></div>
-<h4>El capital: crítica de l'economia política</h4>
-<p>Marx, Karl</p>
-<p><a href="bibliography/books/marx-capital-critica-economia.html">Veure fitxa</a></p>
-</article>
-</div>
-</article>
-<article class="bibliography__section shelf shelf--method">
-<header class="section-header">
-<h2 contenteditable="true">Metodologia Etnografia Virtual</h2>
-<p class="meta">Llibres que modelen el mètode i l'observació en línia.</p>
-</header>
-<div class="bookshelf">
-<article class="book-card" data-pdf-src="bibliografia/METDOLIGIA ETNOGRAFIA VIRTUAL/Ardèvol et al. - 2003 - Etnografía virtualizada la observación participante y la entrevista semiestructurada en línea.pdf">
-<div class="cover-wrapper"><canvas class="cover-canvas"></canvas></div>
-<h4>Etnografía virtualizada: la observación participante i l'entrevista semiestructurada en línia</h4>
-<p>Ardèvol, Elisenda et al.</p>
-<p><a href="bibliography/books/ardevol-2003-etnografia-virtualizada.html">Veure fitxa</a></p>
-</article>
-<article class="book-card" data-pdf-src="bibliografia/METDOLIGIA ETNOGRAFIA VIRTUAL/Domínguez Figaredo - 2012 - Escenarios híbridos, narrativas transmedia,.pdf">
-<div class="cover-wrapper"><canvas class="cover-canvas"></canvas></div>
-<h4>Escenarios híbridos, narrativas transmedia, etnografía expandida</h4>
-<p>Domínguez Figaredo, Daniel</p>
-<p><a href="bibliography/books/dominguez-2012-escenarios-hibridos.html">Veure fitxa</a></p>
-</article>
-<article class="book-card" data-pdf-src="bibliografia/METDOLIGIA ETNOGRAFIA VIRTUAL/El_problema_de_la_imagen_en_la.pdf">
-<div class="cover-wrapper"><canvas class="cover-canvas"></canvas></div>
-<h4>El problema de la imagen en la</h4>
-<p>Autor desconegut</p>
-<p><a href="bibliography/books/problema-imagen.html">Veure fitxa</a></p>
-</article>
-<article class="book-card" data-pdf-src="bibliografia/METDOLIGIA ETNOGRAFIA VIRTUAL/Pueyo Zoco - 2018 - Ficciones víricas y ficciones sacrificiales. Notas sobre biopolítica y contagio en España.pdf">
-<div class="cover-wrapper"><canvas class="cover-canvas"></canvas></div>
-<h4>Ficciones víricas i ficciones sacrificials</h4>
-<p>Pueyo Zoco, Víctor</p>
-<p><a href="bibliography/books/pueyo-2018-ficciones-viricas.html">Veure fitxa</a></p>
-</article>
-</div>
-</article>
-<article class="bibliography__section shelf shelf--reality">
-<header class="section-header">
-<h2 contenteditable="true">Reality Show Commodification</h2>
-<p class="meta">Obres que expliquen competició, impacte mediàtic i neoliberalisme.</p>
-</header>
-<div class="bookshelf">
-<article class="book-card" data-pdf-src="bibliografia/Reality Show Commodification/Hearn - 2008 - `Meat, Mask, Burden` Probing the contours of the branded `self`.pdf">
-<div class="cover-wrapper"><canvas class="cover-canvas"></canvas></div>
-<h4>Meat, Mask, Burden: Probing the contours of the branded self</h4>
-<p>Hearn, Alison</p>
-<p><a href="bibliography/books/hearn-2008-meat-mask-burden.html">Veure fitxa</a></p>
-</article>
-<article class="book-card" data-pdf-src="bibliografia/Reality Show Commodification/Maestre-Delgado - 2005 - Reality shows how to exploit a TV genre.pdf">
-<div class="cover-wrapper"><canvas class="cover-canvas"></canvas></div>
-<h4>Reality shows: how to exploit a TV genre</h4>
-<p>Maestre-Delgado, Daniel</p>
-<p><a href="bibliography/books/maestre-2005-reality-shows-exploit.html">Veure fitxa</a></p>
-</article>
-<article class="book-card" data-pdf-src="bibliografia/Reality Show Commodification/Redden - 2018 - Is Reality TV Neoliberal.pdf">
-<div class="cover-wrapper"><canvas class="cover-canvas"></canvas></div>
-<h4>Is Reality TV Neoliberal?</h4>
-<p>Redden, Guy</p>
-<p><a href="bibliography/books/redden-2018-reality-tv-neoliberal.html">Veure fitxa</a></p>
-</article>
-<article class="book-card" data-pdf-src="bibliografia/Reality Show Commodification/OT/Dolores Cáceres - 2002- Operación Triunfo o el restablecimiento del orden social.pdf">
-<div class="cover-wrapper"><canvas class="cover-canvas"></canvas></div>
-<h4>Operación Triunfo o el restablecimiento del orden social</h4>
-<p>Cáceres Zapatero, María Dolores</p>
-<p><a href="bibliography/books/caceres-2002-operacion-triunfo.html">Veure fitxa</a></p>
-</article>
-<article class="book-card" data-pdf-src="bibliografia/Reality Show Commodification/OT/Espinosa - 2021 - “Un Operación Triunfo para los pobres”. La ideología neoliberal en los nuevos modelos de intervenció.pdf">
-<div class="cover-wrapper"><canvas class="cover-canvas"></canvas></div>
-<h4>"Un Operación Triunfo para los pobres": la ideologia neoliberal als nous models</h4>
-<p>Espinosa, Horacio</p>
-<p><a href="bibliography/books/espinosa-2021-operacion-triunfo-pobres.html">Veure fitxa</a></p>
-</article>
-<article class="book-card" data-pdf-src="bibliografia/Reality Show Commodification/OT/González - OT 2017 A LA LUZ DE LA TEORÍA CRÍTICA.pdf">
-<div class="cover-wrapper"><canvas class="cover-canvas"></canvas></div>
-<h4>OT 2017 a la llum de la Teoria Critica</h4>
-<p>González, Alexandre Gil</p>
-<p><a href="bibliography/books/gonzalez-ot-2017-teoria-critica.html">Veure fitxa</a></p>
-</article>
-<article class="book-card">
-<div class="cover-wrapper empty">📗</div>
-<h4>OT és la utopia emocional del neoliberalisme</h4>
-<p>Lenore, Víctor</p>
-<p><a href="bibliography/books/lenore-ot-utopia-neoliberalisme.html">Veure fitxa</a></p>
-</article>
-<article class="book-card">
-<div class="cover-wrapper empty">📗</div>
-<h4>No ho diguis OT, digues #OT</h4>
-<p>Trujillo, Noemí López</p>
-<p><a href="bibliography/books/trujillo-no-diguis-ot.html">Veure fitxa</a></p>
-</article>
-</div>
-</article>
+  <article class="bibliography__section shelf shelf--fandom">
+    <header class="section-header">
+      <h2>Fandom-Religiò</h2>
+      <p class="meta">Textos sobre culte, identitat i congregació fan.</p>
+    </header>
+    <div class="bookshelf">
+      <article class="book-card" data-pdf-src="bibliografia/FANDOM-RELIGIÓ/Canals - 2014 - Dioses de tarifa plana. El culto a María Lionza y Las Nuevas Tecnologías.pdf">
+        <div class="cover-wrapper"><canvas class="cover-canvas"></canvas></div>
+        <h4>Dioses de Tarifa Plana: El culto a María Lionza i les noves tecnologies</h4>
+        <p>Canals, Roger</p>
+        <p><a href="bibliography/books/canals-2014-dioses-tarifa-plana.html">Veure fitxa</a></p>
+      </article>
+      <article class="book-card" data-pdf-src="bibliografia/FANDOM-RELIGIÓ/Jennifer Otter Bickerdike - The Secular Religion of Fandom (2015, SAGE) - libgen.li.pdf">
+        <div class="cover-wrapper"><canvas class="cover-canvas"></canvas></div>
+        <h4>The Secular Religion of Fandom: Pop Culture Pilgrim</h4>
+        <p>Bickerdike, Jennifer Otter</p>
+        <p><a href="bibliography/books/bickerdike-2015-secular-religion-fandom.html">Veure fitxa</a></p>
+      </article>
+    </div>
+  </article>
+
+  <article class="bibliography__section shelf shelf--theory">
+    <header class="section-header">
+      <h2>Marc Teòric General</h2>
+      <p class="meta">Lectures teòriques de referència per al marc general.</p>
+    </header>
+    <div class="bookshelf">
+      <article class="book-card">
+        <div class="cover-wrapper empty">📕</div>
+        <h4>Politics, Power and Ethics: Butler i Connolly</h4>
+        <p>Butler, Judith i Connolly, William E.</p>
+        <p><a href="bibliography/books/butler-connolly-politics-power-ethics.html">Veure fitxa</a></p>
+      </article>
+      <article class="book-card" data-pdf-src="bibliografia/MARC TEÒRIC GENERAL/Debord - La sociedad del espectáculo.pdf">
+        <div class="cover-wrapper"><canvas class="cover-canvas"></canvas></div>
+        <h4>La sociedad del espectáculo</h4>
+        <p>Debord, Guy</p>
+        <p><a href="bibliography/books/debord-sociedad-espectaculo.html">Veure fitxa</a></p>
+      </article>
+      <article class="book-card" data-pdf-src="bibliografia/MARC TEÒRIC GENERAL/Marx et al. - El capital crítica de la economía política.pdf">
+        <div class="cover-wrapper"><canvas class="cover-canvas"></canvas></div>
+        <h4>El capital: crítica de l'economia política</h4>
+        <p>Marx, Karl</p>
+        <p><a href="bibliography/books/marx-capital-critica-economia.html">Veure fitxa</a></p>
+      </article>
+    </div>
+  </article>
+
+  <article class="bibliography__section shelf shelf--method">
+    <header class="section-header">
+      <h2>Metodologia Etnografia Virtual</h2>
+      <p class="meta">Llibres que modelen el mètode i l'observació en línia.</p>
+    </header>
+    <div class="bookshelf">
+      <article class="book-card" data-pdf-src="bibliografia/METDOLIGIA ETNOGRAFIA VIRTUAL/Ardèvol et al. - 2003 - Etnografía virtualizada la observación participante y la entrevista semiestructurada en línea.pdf">
+        <div class="cover-wrapper"><canvas class="cover-canvas"></canvas></div>
+        <h4>Etnografía virtualizada: la observación participante i l'entrevista semiestructurada en línia</h4>
+        <p>Ardèvol, Elisenda et al.</p>
+        <p><a href="bibliography/books/ardevol-2003-etnografia-virtualizada.html">Veure fitxa</a></p>
+      </article>
+      <article class="book-card" data-pdf-src="bibliografia/METDOLIGIA ETNOGRAFIA VIRTUAL/Domínguez Figaredo - 2012 - Escenarios híbridos, narrativas transmedia,.pdf">
+        <div class="cover-wrapper"><canvas class="cover-canvas"></canvas></div>
+        <h4>Escenarios híbridos, narrativas transmedia, etnografía expandida</h4>
+        <p>Domínguez Figaredo, Daniel</p>
+        <p><a href="bibliography/books/dominguez-2012-escenarios-hibridos.html">Veure fitxa</a></p>
+      </article>
+      <article class="book-card" data-pdf-src="bibliografia/METDOLIGIA ETNOGRAFIA VIRTUAL/El_problema_de_la_imagen_en_la.pdf">
+        <div class="cover-wrapper"><canvas class="cover-canvas"></canvas></div>
+        <h4>El problema de la imagen en la</h4>
+        <p>Autor desconegut</p>
+        <p><a href="bibliography/books/problema-imagen.html">Veure fitxa</a></p>
+      </article>
+      <article class="book-card" data-pdf-src="bibliografia/METDOLIGIA ETNOGRAFIA VIRTUAL/Pueyo Zoco - 2018 - Ficciones víricas y ficciones sacrificiales. Notas sobre biopolítica y contagio en España.pdf">
+        <div class="cover-wrapper"><canvas class="cover-canvas"></canvas></div>
+        <h4>Ficciones víricas i ficciones sacrificials</h4>
+        <p>Pueyo Zoco, Víctor</p>
+        <p><a href="bibliography/books/pueyo-2018-ficciones-viricas.html">Veure fitxa</a></p>
+      </article>
+    </div>
+  </article>
+
+  <article class="bibliography__section shelf shelf--reality">
+    <header class="section-header">
+      <h2>Reality Show Commodification</h2>
+      <p class="meta">Obres que expliquen competició, impacte mediàtic i neoliberalisme.</p>
+    </header>
+    <div class="bookshelf">
+      <article class="book-card" data-pdf-src="bibliografia/Reality Show Commodification/Hearn - 2008 - `Meat, Mask, Burden` Probing the contours of the branded `self`.pdf">
+        <div class="cover-wrapper"><canvas class="cover-canvas"></canvas></div>
+        <h4>Meat, Mask, Burden: Probing the contours of the branded self</h4>
+        <p>Hearn, Alison</p>
+        <p><a href="bibliography/books/hearn-2008-meat-mask-burden.html">Veure fitxa</a></p>
+      </article>
+      <article class="book-card" data-pdf-src="bibliografia/Reality Show Commodification/Maestre-Delgado - 2005 - Reality shows how to exploit a TV genre.pdf">
+        <div class="cover-wrapper"><canvas class="cover-canvas"></canvas></div>
+        <h4>Reality shows: how to exploit a TV genre</h4>
+        <p>Maestre-Delgado, Daniel</p>
+        <p><a href="bibliography/books/maestre-2005-reality-shows-exploit.html">Veure fitxa</a></p>
+      </article>
+      <article class="book-card" data-pdf-src="bibliografia/Reality Show Commodification/Redden - 2018 - Is Reality TV Neoliberal.pdf">
+        <div class="cover-wrapper"><canvas class="cover-canvas"></canvas></div>
+        <h4>Is Reality TV Neoliberal?</h4>
+        <p>Redden, Guy</p>
+        <p><a href="bibliography/books/redden-2018-reality-tv-neoliberal.html">Veure fitxa</a></p>
+      </article>
+      <article class="book-card" data-pdf-src="bibliografia/Reality Show Commodification/OT/Dolores Cáceres - 2002- Operación Triunfo o el restablecimiento del orden social.pdf">
+        <div class="cover-wrapper"><canvas class="cover-canvas"></canvas></div>
+        <h4>Operación Triunfo o el restablecimiento del orden social</h4>
+        <p>Cáceres Zapatero, María Dolores</p>
+        <p><a href="bibliography/books/caceres-2002-operacion-triunfo.html">Veure fitxa</a></p>
+      </article>
+      <article class="book-card" data-pdf-src="bibliografia/Reality Show Commodification/OT/Espinosa - 2021 - "Un Operación Triunfo para los pobres". La ideología neoliberal en los nuevos modelos de intervenció.pdf">
+        <div class="cover-wrapper"><canvas class="cover-canvas"></canvas></div>
+        <h4>"Un Operación Triunfo para los pobres": la ideologia neoliberal als nous models</h4>
+        <p>Espinosa, Horacio</p>
+        <p><a href="bibliography/books/espinosa-2021-operacion-triunfo-pobres.html">Veure fitxa</a></p>
+      </article>
+      <article class="book-card" data-pdf-src="bibliografia/Reality Show Commodification/OT/González - OT 2017 A LA LUZ DE LA TEORÍA CRÍTICA.pdf">
+        <div class="cover-wrapper"><canvas class="cover-canvas"></canvas></div>
+        <h4>OT 2017 a la llum de la Teoria Critica</h4>
+        <p>González, Alexandre Gil</p>
+        <p><a href="bibliography/books/gonzalez-ot-2017-teoria-critica.html">Veure fitxa</a></p>
+      </article>
+      <article class="book-card">
+        <div class="cover-wrapper empty">📗</div>
+        <h4>OT és la utopia emocional del neoliberalisme</h4>
+        <p>Lenore, Víctor</p>
+        <p><a href="bibliography/books/lenore-ot-utopia-neoliberalisme.html">Veure fitxa</a></p>
+      </article>
+      <article class="book-card">
+        <div class="cover-wrapper empty">📗</div>
+        <h4>No ho diguis OT, digues #OT</h4>
+        <p>Trujillo, Noemí López</p>
+        <p><a href="bibliography/books/trujillo-no-diguis-ot.html">Veure fitxa</a></p>
+      </article>
+    </div>
+  </article>
 </div>
 </section>
+
 <footer>
 <p>© 2026 [El teu nom]. Inspirat en The Pudding.</p>
 </footer>
+
+<script>
+// Navigation bar toggle functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const navToggle = document.querySelector('.site-nav__toggle');
+  const navLinks = document.querySelector('.site-nav__links');
+  
+  if (navToggle) {
+    navToggle.addEventListener('click', function() {
+      navLinks.classList.toggle('active');
+      
+      // Toggle hamburger menu icon
+      const spans = navToggle.querySelectorAll('span');
+      if (navLinks.classList.contains('active')) {
+        spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+      } else {
+        spans[0].style.transform = 'none';
+        spans[1].style.opacity = '1';
+        spans[2].style.transform = 'none';
+      }
+    });
+  }
+  
+  // Navigation bar effect on scroll
+  window.addEventListener('scroll', function() {
+    const nav = document.querySelector('.site-nav');
+    if (window.scrollY > 50) {
+      nav.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+    } else {
+      nav.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+    }
+  });
+});
+</script>
 </body>
 </html>
-<parameter name="filePath">c:\Users\Luca\OneDrive\Documents\GitHub\tfg_web\main.html
-</parameter>
