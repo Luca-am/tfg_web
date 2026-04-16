@@ -17,9 +17,7 @@
 <h1>Apps utilitzades</h1>
 <p>Fes clic en cada app per anar a la pàgina corresponent amb la informació de privacitat, descàrrega i l'ús que n'he fet.</p>
 </div>
-<div class="app-carousel-wrapper">
-<button class="carousel-control prev" data-target="app-carousel">‹</button>
-<div class="app-carousel" id="app-carousel">
+<div class="app-grid">
 <article class="app-card app-card--zotero">
 <a href="apps/zotero.html">
 <div class="app-card__media"><img alt="Zotero" src="assets/icons/ZOTERO/zotero.jpg"/></div>
@@ -56,8 +54,33 @@
 </div>
 </a>
 </article>
+<article class="app-card app-card--x">
+<a href="apps/x.html">
+<div class="app-card__media"><img alt="X (Twitter)" src="assets/icons/X/x-twitter.png"/></div>
+<div class="app-card__body">
+<h2>X (Twitter)</h2>
+<p>Xarxa social usada com a camp d'observació etnogràfica.</p>
 </div>
-<button class="carousel-control next" data-target="app-carousel">›</button>
+</a>
+</article>
+<article class="app-card app-card--vscode">
+<a href="apps/vscode.html">
+<div class="app-card__media">VS</div>
+<div class="app-card__body">
+<h2>Visual Studio Code</h2>
+<p>Editor de codi per construir i mantenir aquest lloc web.</p>
+</div>
+</a>
+</article>
+<article class="app-card app-card--buzz">
+<a href="apps/buzz.html">
+<div class="app-card__media">Bz</div>
+<div class="app-card__body">
+<h2>Buzz</h2>
+<p>Transcripció automàtica local de les entrevistes.</p>
+</div>
+</a>
+</article>
 </div>
 <section class="app-notes">
 <h2>Altres notes</h2>
@@ -67,16 +90,6 @@
 <footer>
 <p>© 2026 TFG OT</p>
 </footer>
-<script>
-        document.querySelectorAll('.carousel-control').forEach(button => {
-            button.addEventListener('click', () => {
-                const track = document.getElementById(button.dataset.target);
-                if (!track) return;
-                const offset = button.classList.contains('next') ? 360 : -360;
-                track.scrollBy({ left: offset, behavior: 'smooth' });
-            });
-        });
-    </script>
 </body>
 </html>
 
