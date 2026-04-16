@@ -211,6 +211,7 @@ body {
     border-radius: 999px;
     font-size: 0.95rem;
     transition: background 0.25s ease;
+}
 .open-detail:hover,
 .open-pdf:hover {
     background: #1f2937;
@@ -515,11 +516,22 @@ header p {
         justify-content: space-between;
     }
 
+    .site-nav__toggle {
+        display: flex;
+        flex-direction: column;
+    }
+
     .site-nav__links {
+        display: none;
         width: 100%;
         justify-content: center;
         gap: 0.35rem;
-        padding: 0.35rem 0;
+        padding: 0.5rem 0;
+    }
+
+    .site-nav__links.open {
+        display: flex;
+        flex-wrap: wrap;
     }
 
     .site-nav__links a {
