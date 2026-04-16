@@ -165,10 +165,19 @@ function initBibliographyFilters() {
     const cards = bibliography.querySelectorAll('.book-card');
     const sections = bibliography.querySelectorAll('.bibliography__section');
     const emptyState = bibliography.querySelector('.bibliography-empty');
+    const searchInput = bibliography.querySelector('.bibliography-search__input');
+    const searchStatus = bibliography.querySelector('.bibliography-search__status');
+    const searchCount = bibliography.querySelector('.bibliography-search__count');
     const state = {
         type: 'all',
-        theme: 'all'
+        theme: 'all',
+        query: ''
     };
+
+    cards.forEach((card) => {
+        card.dataset.searchBase = buildCardSearchBase(card);
+        card.dataset.searchIndex = normalizeForSearch(card.dataset.searchBase);
+    });
 
     function applyFilters() {
         let visibleCards = 0;
@@ -176,7 +185,8 @@ function initBibliographyFilters() {
         cards.forEach((card) => {
             const matchesType = state.type === 'all' || card.dataset.type === state.type;
             const matchesTheme = state.theme === 'all' || card.dataset.theme === state.theme;
-            const isVisible = matchesType && matchesTheme;
+            const matchesQuery = !state.query || (card.dataset.searchIndex || '').includes(state.query);
+            const isVisible = matchesType && matchesTheme && matchesQuery;
 
             card.classList.toggle('is-hidden-by-filter', !isVisible);
 
@@ -189,6 +199,10 @@ function initBibliographyFilters() {
             const hasVisibleCards = section.querySelector('.book-card:not(.is-hidden-by-filter)');
             section.classList.toggle('is-hidden-by-filter', !hasVisibleCards);
         });
+
+        if (searchCount) {
+            searchCount.textContent = `${visibleCards} resultat${visibleCards === 1 ? '' : 's'}`;
+        }
 
         if (emptyState) {
             emptyState.hidden = visibleCards !== 0;
@@ -213,7 +227,93 @@ function initBibliographyFilters() {
         });
     });
 
+    if (searchInput) {
+        searchInput.addEventListener('input', () => {
+            state.query = normalizeForSearch(searchInput.value);
+            applyFilters();
+        });
+    }
+
+    hydrateDetailSearchIndex(cards, searchStatus, () => {
+        if (state.query) {
+            applyFilters();
+        }
+    });
+
     applyFilters();
+}
+
+function normalizeForSearch(text) {
+    return (text || '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase();
+}
+
+function buildCardSearchBase(card) {
+    const title = card.querySelector('h4')?.textContent?.trim() || '';
+    const author = card.querySelector('p')?.textContent?.trim() || '';
+    const type = card.dataset.type || '';
+    const theme = card.dataset.theme || '';
+    const link = card.querySelector('a[href]')?.getAttribute('href') || '';
+
+    return [title, author, type, theme, link].join(' ');
+}
+
+async function hydrateDetailSearchIndex(cards, statusNode, onCardIndexed) {
+    const linkCards = Array.from(cards).filter((card) => card.querySelector('a[href]'));
+
+    if (!linkCards.length) return;
+
+    let indexed = 0;
+    let failed = 0;
+
+    if (statusNode) {
+        statusNode.textContent = 'Indexant contingut de fitxes per ampliar la cerca...';
+    }
+
+    await Promise.allSettled(linkCards.map(async (card) => {
+        const link = card.querySelector('a[href]')?.getAttribute('href');
+
+        if (!link) {
+            return;
+        }
+
+        try {
+            const response = await fetch(link, { cache: 'force-cache' });
+
+            if (!response.ok) {
+                throw new Error(`No s\'ha pogut carregar ${link}`);
+            }
+
+            const html = await response.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const detailBits = [];
+
+            doc.querySelectorAll('h1, .book-hero__meta span, .meta-list strong, .meta-list span, .ficha-note').forEach((node) => {
+                detailBits.push(node.textContent || '');
+            });
+
+            const enrichedText = `${card.dataset.searchBase || ''} ${detailBits.join(' ')}`;
+            card.dataset.searchIndex = normalizeForSearch(enrichedText);
+            indexed += 1;
+
+            if (typeof onCardIndexed === 'function') {
+                onCardIndexed();
+            }
+        } catch (error) {
+            failed += 1;
+        }
+    }));
+
+    if (statusNode) {
+        if (failed === 0) {
+            statusNode.textContent = `Cerca ampliada amb contingut intern de ${indexed} fitxes.`;
+        } else {
+            statusNode.textContent = `Cerca parcial: ${indexed} fitxes indexades, ${failed} no disponibles.`;
+        }
+    }
 }
 
 
