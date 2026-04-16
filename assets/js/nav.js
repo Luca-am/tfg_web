@@ -11,7 +11,7 @@
 
   const pages = [
     { href: base + 'index.html',       label: 'Inici',       key: 'index'       },
-    { href: base + 'interviews.html', label: 'Interviews', key: 'interviews'  },
+    { href: base + 'interviews.html', label: 'Entrevistes', key: 'interviews'  },
     { href: base + 'apps.html',        label: 'Apps',        key: 'apps'        },
     { href: base + 'bibliography.html',label: 'Bibliografia', key: 'bibliography'},
     { href: base + 'glossary.html',    label: 'Glossari',    key: 'glossary'    },

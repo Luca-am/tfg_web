@@ -278,7 +278,7 @@ section h2 {
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--ink-500);
+    color: var(--ink-900);
     margin-right: 0.15rem;
 }
 
@@ -338,7 +338,7 @@ section h2 {
 
 .bibliography-search__meta {
     margin: 0;
-    color: var(--ink-700);
+    color: var(--ink-900);
     font-size: 0.88rem;
 }
 
@@ -358,11 +358,20 @@ section h2 {
 .section-header h2 {
     margin: 0;
     font-size: 1.2rem;
+    color: var(--ink-900);
 }
 
 .section-header .meta {
     margin: 0.25rem 0 0;
     color: var(--ink-700);
+}
+
+.bibliography__section .section-header h2 {
+    color: #ffffff;
+}
+
+.bibliography__section .section-header .meta {
+    color: rgba(255, 255, 255, 0.92);
 }
 
 .section-header h2[contenteditable="true"] {
