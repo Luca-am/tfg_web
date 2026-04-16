@@ -490,6 +490,102 @@ section h2 {
     margin-top: 0;
 }
 
+.citation-actions {
+    position: relative;
+    display: grid;
+    gap: 0.45rem;
+    margin-top: 0.7rem;
+}
+
+.citation-toggle,
+.citation-menu__option {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    max-width: 100%;
+    padding: 0.52rem 0.95rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.citation-toggle {
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    backdrop-filter: blur(8px);
+}
+
+.citation-toggle:hover,
+.citation-toggle:focus-visible,
+.citation-menu__option:hover,
+.citation-menu__option:focus-visible {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 24px rgba(15, 39, 99, 0.22);
+}
+
+.citation-actions.is-open .citation-toggle {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.34);
+}
+
+.citation-menu {
+    display: grid;
+    gap: 0.45rem;
+}
+
+.citation-menu__option {
+    text-align: left;
+    background: rgba(247, 249, 255, 0.96);
+    border-color: rgba(46, 116, 255, 0.3);
+    color: var(--ink-900);
+}
+
+.citation-menu__option.is-active {
+    background: linear-gradient(120deg, rgba(46, 116, 255, 0.18), rgba(255, 122, 47, 0.18));
+    border-color: rgba(255, 255, 255, 0.38);
+}
+
+.citation-preview {
+    display: grid;
+    gap: 0.3rem;
+    padding: 0.75rem 0.85rem;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(7, 19, 55, 0.38);
+}
+
+.citation-preview__label {
+    margin: 0;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.74);
+}
+
+.citation-preview__text {
+    margin: 0;
+    color: #ffffff;
+    font-size: 0.84rem;
+    line-height: 1.45;
+    word-break: break-word;
+}
+
+.citation-feedback {
+    min-height: 1.15rem;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 0.8rem;
+}
+
+.citation-feedback.is-error {
+    color: #ffd6d1;
+}
+
 .book-card h4,
 .book-card p,
 .book-card > .open-pdf {
@@ -1251,6 +1347,13 @@ section,
 }
 
 @media (max-width: 900px) {
+    .citation-toggle,
+    .citation-menu__option,
+    .cover-overlay .open-detail,
+    .cover-overlay .open-pdf {
+        width: 100%;
+    }
+
     .site-nav__toggle {
         display: flex;
     }
