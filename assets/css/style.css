@@ -364,6 +364,18 @@ header p {
     font-weight: 600;
 }
 
+.pdf-preview__actions {
+    margin-top: 0.9rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.pdf-preview__download {
+    border-color: rgba(15, 23, 42, 0.2);
+    color: #0f172a;
+    background: #f8fafc;
+}
+
 .ficha {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));

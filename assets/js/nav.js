@@ -37,7 +37,7 @@
   nav.className = 'site-nav';
   nav.innerHTML = `
     <div class="site-nav__inner">
-      <a class="site-nav__brand" href="${base}index.html">TFG ? Eines</a>
+      <a class="site-nav__brand" href="${base}index.html">TFG OT</a>
       <button class="site-nav__toggle" aria-label="Obrir menú" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
