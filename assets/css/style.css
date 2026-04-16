@@ -1257,6 +1257,12 @@ section h2 {
     border: 1px solid rgba(21, 51, 120, 0.08);
 }
 
+.app-card--vscode .app-card__media {
+    padding: 0.2rem;
+    background: #ffffff;
+    border: 1px solid rgba(21, 51, 120, 0.08);
+}
+
 .app-card__media img {
     width: 100%;
     height: 100%;
@@ -1266,6 +1272,11 @@ section h2 {
 }
 
 .app-card--drive .app-card__media img {
+    object-fit: contain;
+    border-radius: 12px;
+}
+
+.app-card--vscode .app-card__media img {
     object-fit: contain;
     border-radius: 12px;
 }
