@@ -447,11 +447,14 @@ section h2 {
     margin-top: 1rem;
     font-size: 0.88rem;
     font-weight: 700;
-    color: #2e7d32;
     letter-spacing: 0.02em;
     position: relative;
     z-index: 2;
 }
+
+.tfg-block--que .tfg-block__cta { color: var(--ot-blue-700); }
+.tfg-block--com .tfg-block__cta { color: #c84b00; }
+.tfg-block--context .tfg-block__cta { color: #2e7d32; }
 
 .section-divider-title {
     margin: 0 0 1rem;
