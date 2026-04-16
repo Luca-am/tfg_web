@@ -217,6 +217,108 @@ section h2 {
     padding: 1.2rem 0 0;
 }
 
+.glossary-note {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 0.85rem;
+    padding: 0.42rem 0.8rem;
+    border-radius: var(--radius-pill);
+    background: rgba(46, 116, 255, 0.1);
+    border: 1px solid rgba(46, 116, 255, 0.16);
+    color: var(--ot-blue-900);
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.glossary-grid {
+    display: grid;
+    gap: 1.35rem;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    align-items: start;
+}
+
+.glossary-card {
+    position: relative;
+    min-height: 280px;
+    padding: 1.15rem 1.15rem 1.25rem;
+    border-radius: 18px;
+    border: 1px solid rgba(15, 23, 49, 0.08);
+    box-shadow: 0 18px 28px rgba(15, 23, 49, 0.12);
+    transform: rotate(-1.1deg);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.glossary-card:nth-child(even) {
+    transform: rotate(1.15deg);
+}
+
+.glossary-card:hover {
+    transform: translateY(-3px) rotate(0deg);
+    box-shadow: 0 24px 34px rgba(15, 23, 49, 0.18);
+}
+
+.glossary-card::before {
+    content: "";
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    width: 18px;
+    height: 18px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.78);
+    box-shadow: 0 2px 8px rgba(15, 23, 49, 0.16);
+}
+
+.glossary-card--blue {
+    background: linear-gradient(180deg, #eef5ff 0%, #ddeaff 100%);
+}
+
+.glossary-card--yellow {
+    background: linear-gradient(180deg, #fff5cc 0%, #ffe89d 100%);
+}
+
+.glossary-card--pink {
+    background: linear-gradient(180deg, #ffe0ea 0%, #ffc7d9 100%);
+}
+
+.glossary-card--mint {
+    background: linear-gradient(180deg, #ddf8ef 0%, #c3f0e0 100%);
+}
+
+.glossary-card--orange {
+    background: linear-gradient(180deg, #ffe7d2 0%, #ffd0a7 100%);
+}
+
+.glossary-card--lavender {
+    background: linear-gradient(180deg, #efe5ff 0%, #dccbff 100%);
+}
+
+.glossary-card__letter {
+    margin: 0 0 0.5rem;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(15, 23, 49, 0.58);
+}
+
+.glossary-card__title {
+    margin: 0 0 0.85rem;
+    font-size: 1.35rem;
+    line-height: 1.15;
+    color: var(--ink-900);
+}
+
+.glossary-card p {
+    margin: 0 0 0.78rem;
+    color: rgba(15, 23, 49, 0.88);
+}
+
+.glossary-card p:last-child {
+    margin-bottom: 0;
+}
+
 /* Homepage + shared cards */
 .themes-grid {
     display: grid;
