@@ -252,6 +252,7 @@ section h2 {
 
 .glossary-card {
     position: relative;
+    min-width: 0;
     min-height: 280px;
     padding: 1.15rem 1.15rem 1.25rem;
     border-radius: 18px;
@@ -325,6 +326,13 @@ section h2 {
 .glossary-card p {
     margin: 0 0 0.78rem;
     color: rgba(15, 23, 49, 0.88);
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.glossary-card a {
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 .glossary-card p:last-child {
