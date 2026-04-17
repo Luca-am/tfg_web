@@ -779,6 +779,18 @@ function initBibliographyFilters() {
         }
     });
 
+    // Apply filters from URL params, e.g. bibliography.html?theme=reality
+    const urlParams = new URLSearchParams(window.location.search);
+    ['type', 'theme'].forEach((group) => {
+        const val = urlParams.get(group);
+        if (val) {
+            const target = bibliography.querySelector(
+                `.bibliography-filter__button[data-filter-group="${group}"][data-filter-value="${val}"]`
+            );
+            if (target) target.click();
+        }
+    });
+
     applyFilters();
 }
 
