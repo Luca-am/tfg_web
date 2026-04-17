@@ -1387,7 +1387,7 @@ section h2 {
 }
 
 .interview-node:hover,
-.interview-node:focus-within {
+.interview-node__anchor:focus-visible {
     z-index: 40;
 }
 
@@ -1478,8 +1478,7 @@ section h2 {
 }
 
 .interview-node__anchor:hover .interview-sheet,
-.interview-node__anchor:focus-visible .interview-sheet,
-.interview-node:focus-within .interview-sheet {
+.interview-node__anchor:focus-visible .interview-sheet {
     opacity: 1;
     visibility: visible;
     transform: translate(calc(-50% + var(--sheet-shift-x)), 0) scale(1);
@@ -1495,10 +1494,8 @@ section h2 {
 
 .interview-node:first-child .interview-node__anchor:hover .interview-sheet,
 .interview-node:first-child .interview-node__anchor:focus-visible .interview-sheet,
-.interview-node:first-child:focus-within .interview-sheet,
 .interview-node:nth-child(2) .interview-node__anchor:hover .interview-sheet,
-.interview-node:nth-child(2) .interview-node__anchor:focus-visible .interview-sheet,
-.interview-node:nth-child(2):focus-within .interview-sheet {
+.interview-node:nth-child(2) .interview-node__anchor:focus-visible .interview-sheet {
     transform: translate(0, 0) scale(1);
 }
 
@@ -1518,10 +1515,8 @@ section h2 {
 
 .interview-node:last-child .interview-node__anchor:hover .interview-sheet,
 .interview-node:last-child .interview-node__anchor:focus-visible .interview-sheet,
-.interview-node:last-child:focus-within .interview-sheet,
 .interview-node:nth-last-child(2) .interview-node__anchor:hover .interview-sheet,
-.interview-node:nth-last-child(2) .interview-node__anchor:focus-visible .interview-sheet,
-.interview-node:nth-last-child(2):focus-within .interview-sheet {
+.interview-node:nth-last-child(2) .interview-node__anchor:focus-visible .interview-sheet {
     transform: translate(0, 0) scale(1);
 }
 
