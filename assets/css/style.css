@@ -432,6 +432,29 @@ section h2 {
     gap: 1.2rem;
 }
 
+.ot-timeline-figure {
+    margin: 0.9rem 0 1.1rem;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(15, 23, 49, 0.12);
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: var(--shadow-soft);
+}
+
+.ot-timeline-figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.ot-timeline-figure figcaption {
+    margin: 0;
+    padding: 0.55rem 0.75rem;
+    font-size: 0.85rem;
+    color: var(--ink-700);
+    background: rgba(246, 249, 255, 0.94);
+}
+
 .tfg-block--link {
     cursor: pointer;
     transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
