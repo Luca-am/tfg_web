@@ -1382,7 +1382,13 @@ section h2 {
     display: grid;
     place-items: start center;
     isolation: isolate;
+    z-index: 0;
     --sheet-shift-x: 90px;
+}
+
+.interview-node:hover,
+.interview-node:focus-within {
+    z-index: 40;
 }
 
 .interview-node:nth-child(2n) {
