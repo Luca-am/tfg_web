@@ -503,6 +503,10 @@ section h2 {
 }
 
 .theme-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    min-height: 210px;
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(247, 251, 255, 0.94));
     border: 1px solid var(--line-soft);
     border-radius: var(--radius-lg);
@@ -525,6 +529,7 @@ section h2 {
 
 .theme-card p {
     margin: 0;
+    line-height: 1.42;
     color: var(--ink-700);
 }
 
