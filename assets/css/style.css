@@ -243,6 +243,44 @@ section h2 {
     letter-spacing: 0.02em;
 }
 
+.glossary-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1.2rem;
+    padding: 0.8rem;
+    background: rgba(46, 116, 255, 0.08);
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(46, 116, 255, 0.12);
+}
+
+.glossary-nav a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 36px;
+    padding: 0 0.6rem;
+    border-radius: var(--radius-md);
+    background: var(--ot-blue-500);
+    color: var(--ot-white);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+}
+
+.glossary-nav a:hover {
+    background: var(--ot-orange-500);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(15, 23, 49, 0.12);
+}
+
+.glossary-nav a:active {
+    transform: translateY(0);
+}
+
 .glossary-grid {
     display: grid;
     gap: 1.35rem;
