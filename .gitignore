@@ -1,0 +1,19 @@
+# Local Python environment
+.venv/
+__pycache__/
+
+# OS-generated files
+Thumbs.db
+.DS_Store
+
+# Sensitive interview materials
+assets/interviews/audio/**
+assets/interviews/transcripts/**
+assets/interviews/profiles/**
+assets/interviews/pending/audio/**
+assets/interviews/pending/transcripts/**
+
+# Keep documentation and placeholder files
+!assets/interviews/README.md
+!assets/interviews/pending/audio/.gitkeep
+!assets/interviews/pending/transcripts/.gitkeep
